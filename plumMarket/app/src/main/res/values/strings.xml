@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">plumMarket</string>
+    <string name="etServerUrl">주소를 입력해주세요</string>
+</resources>
