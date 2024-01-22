@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public userDTO selectList() throws Exception {
-        return userMapper.selectList();
+    public void insertUser(userDTO user) throws Exception {
+        userMapper.insertUser(user);
     }
 }

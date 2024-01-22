@@ -10,5 +10,5 @@ public interface UserMapper {
 
     userDTO getUserInfo(String userId)throws Exception;
 
-    userDTO selectList()throws Exception;
+    void insertUser(userDTO user)throws Exception;
 }
