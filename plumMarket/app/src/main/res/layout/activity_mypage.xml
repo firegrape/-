@@ -12,12 +12,14 @@
         android:padding="16dp">
 
         <Button
+            android:layout_marginTop="10dp"
             android:id="@+id/btn_Mypage_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
             android:text="마이페이지"
-            android:layout_marginLeft="285dp"
-            android:textSize="10dp" />
+            android:textStyle="bold"
+            android:textSize="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +32,7 @@
                 android:id="@+id/Logoimage"
                 android:layout_width="229dp"
                 android:layout_height="135dp"
-                android:layout_marginLeft="74dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ss" />
         </LinearLayout>
@@ -97,9 +99,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="관심 목록"
+                    android:text="관심목록"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btnGansim"
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="120dp"
+                    android:src="@drawable/right" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -131,6 +142,14 @@
                     android:text="판매내역"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btnPanmae"
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="120dp"
+                    android:src="@drawable/right" />
             </LinearLayout>
         </LinearLayout>
 
@@ -161,6 +180,13 @@
                     android:text="구매내역"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/btnGumae"
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginStart="120dp"
+                    android:src="@drawable/right" />
             </LinearLayout>
         </LinearLayout>
 
@@ -172,8 +198,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
-            android:text="로그아웃"
-            android:textColor="#ffffff" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/colorAccent"
+            android:text="로그아웃" />
     </LinearLayout>
 </ScrollView>

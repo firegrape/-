@@ -150,7 +150,7 @@
             android:layout_width="55dp"
             android:layout_height="51dp"
             android:layout_marginTop="6dp"
-            android:layout_marginLeft="192dp"
+            android:layout_marginLeft="150dp"
             android:src="@drawable/right" />
     </LinearLayout>
 
@@ -170,11 +170,11 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/btnPan"
+            android:id="@+id/btn_panmea1"
             android:layout_width="55dp"
             android:layout_height="51dp"
-            android:layout_marginLeft="235dp"
             android:layout_marginTop="6dp"
+            android:layout_marginLeft="196dp"
             android:src="@drawable/right" />
     </LinearLayout>
 
@@ -197,7 +197,7 @@
             android:layout_width="55dp"
             android:layout_height="51dp"
             android:layout_marginTop="6dp"
-            android:layout_marginLeft="235dp"
+            android:layout_marginLeft="196dp"
             android:src="@drawable/right" />
     </LinearLayout>
 
@@ -220,7 +220,7 @@
             android:layout_width="55dp"
             android:layout_height="51dp"
             android:layout_marginTop="6dp"
-            android:layout_marginLeft="235dp"
+            android:layout_marginLeft="196dp"
             android:src="@drawable/right" />
     </LinearLayout>
 

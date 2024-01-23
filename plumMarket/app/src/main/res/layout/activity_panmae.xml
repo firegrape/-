@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PanmaeActivity">
+    tools:context=".Activity.PanmaeActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -81,61 +81,71 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
 
-                <!-- 판매중 -->
-                <TextView
-                    android:id="@+id/salesButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="70dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="판매중"
-                    android:textSize="16sp" />
+<!--                &lt;!&ndash; 판매중 &ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/salesButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="70dp"-->
+<!--                    android:background="?attr/selectableItemBackground"-->
+<!--                    android:gravity="center"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:text="판매중"-->
+<!--                    android:textSize="16sp" />-->
 
-                <!-- 거래완료 -->
-                <TextView
-                    android:id="@+id/completedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="70dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="거래완료"
-                    android:textSize="16sp" />
+<!--                &lt;!&ndash; 거래완료 &ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/completedButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="70dp"-->
+<!--                    android:background="?attr/selectableItemBackground"-->
+<!--                    android:gravity="center"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:text="거래완료"-->
+<!--                    android:textSize="16sp" />-->
 
-                <!-- 숨김 -->
-                <TextView
-                    android:id="@+id/hiddenButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="숨김"
-                    android:textSize="16sp" />
-            </LinearLayout>
+<!--                &lt;!&ndash; 숨김 &ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/hiddenButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="?attr/selectableItemBackground"-->
+<!--                    android:gravity="center"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:text="숨김"-->
+<!--                    android:textSize="16sp" />-->
+<!--            </LinearLayout>-->
         </HorizontalScrollView>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tlNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- 판매 내역 리스트를 표시하는 RecyclerView 추가 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="502dp"
-            android:id="@+id/baseLayout">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--                뷰 페이저 부분 -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ReviewPager2"
+                android:padding="16dp" />
         </LinearLayout>
 
     </LinearLayout>
 
 </RelativeLayout >
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:id="@+id/pager"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="22dp"-->
-<!--            android:layout_below="@+id/ll">-->
-<!--        </androidx.viewpager2.widget.ViewPager2>-->
+
