@@ -11,4 +11,6 @@ public class ListDTO {
     private String listCreateDate;
     private String listCompletedYn;
     private String listHitCnt;
+    private String listLoc;
+    private int listMoney;
 }

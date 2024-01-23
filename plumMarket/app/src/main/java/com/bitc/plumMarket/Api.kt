@@ -1,5 +1,6 @@
 package com.bitc.plumMarket
 
+import com.bitc.plumMarket.Data.ListData
 import com.bitc.plumMarket.Data.LoginData
 import com.google.gson.Gson
 import retrofit2.Call
@@ -7,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Api {
@@ -23,7 +25,13 @@ interface Api {
         @Field("pw2")pw2: String,
         @Field("nickname")nickname: String,
         @Field("email")email: String,): Call<Void>
+
+    @GET("/selectList")
+    fun getListData(): Call<List<ListData>>
+
 }
+
+
 
 object RetrofitBuilder {
     var api: Api = Retrofit.Builder()
