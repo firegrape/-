@@ -103,12 +103,17 @@ class WriteActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Log.d("error", t.localizedMessage)
                 }
+
+
             })
 
             binding.btnMap.setOnClickListener {
                 val intent = Intent(this, MapActivity::class.java)
                 startActivity(intent)
             }
+
+            val intent = Intent(this, SangsePageActivity::class.java)
+            startActivity(intent)
         }
     }
 

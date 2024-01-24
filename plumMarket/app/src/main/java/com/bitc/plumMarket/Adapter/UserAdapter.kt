@@ -52,6 +52,9 @@ class UserAdapter(private val context: Context, private val userList: ArrayList<
         //데이터 담기
         val currentUser = userList[position]
 
+        holder.nameText.setOnClickListener {
+            Toast.makeText(context,"tsts",Toast.LENGTH_SHORT).show()
+        }
         //화면에 데이터 보여주기
         holder.nameText.text = currentUser.user_nick
 

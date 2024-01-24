@@ -3,6 +3,7 @@ package com.bitc.plumMarket.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.bitc.plumMarket.R
 import com.bitc.plumMarket.databinding.ActivitySangsePageBinding
 
@@ -13,8 +14,8 @@ class SangsePageActivity : AppCompatActivity() {
         val binding = ActivitySangsePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
+        val selectedIdx = intent.getIntExtra("selected_idx", -1)
+        Log.d("SangsePageActivity", "받은 selected_idx: $selectedIdx")
 
         binding.btnBack.setOnClickListener {
             intent = Intent(this, MainActivity2::class.java)
