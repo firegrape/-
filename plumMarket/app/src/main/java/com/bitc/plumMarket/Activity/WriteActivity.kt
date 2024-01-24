@@ -1,9 +1,11 @@
 package com.bitc.plumMarket.Activity
 
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -11,11 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bitc.plumMarket.MySharedpreferences
+import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.databinding.ActivityWriteBinding
 import com.bitc.plumMarket.databinding.ItemImageBinding
-
-
-import java.lang.Exception
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WriteActivity : AppCompatActivity() {
 
@@ -40,30 +44,32 @@ class WriteActivity : AppCompatActivity() {
         }
 
         // 갤러리 열기를 위한 런처 등록
-        val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            try {
-                // 선택된 이미지 URI 리스트
-                val uris = if (result.data?.clipData != null) {
-                    (0 until result.data!!.clipData!!.itemCount).map {
-                        result.data!!.clipData!!.getItemAt(it).uri
+        val requestGalleryLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                try {
+                    // 선택된 이미지 URI 리스트
+                    val uris = if (result.data?.clipData != null) {
+                        (0 until result.data!!.clipData!!.itemCount).map {
+                            result.data!!.clipData!!.getItemAt(it).uri
+                        }
+                    } else {
+                        listOf(result.data?.data!!)
                     }
-                } else {
-                    listOf(result.data?.data!!)
-                }
 
-                // 이미지 개수 제한 체크
-                if (uris.size + imageAdapter.itemCount > maxImageCount) {
-                    // 이미지 선택 개수가 제한을 초과하는 경우
-                    Toast.makeText(this@WriteActivity, "5장까지 선택 가능합니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    // 이미지 어댑터에 이미지 추가 및 리사이클러뷰 표시
-                    imageAdapter.addImages(uris)
-                    binding.imageRecyclerView.visibility = RecyclerView.VISIBLE
+                    // 이미지 개수 제한 체크
+                    if (uris.size + imageAdapter.itemCount > maxImageCount) {
+                        // 이미지 선택 개수가 제한을 초과하는 경우
+                        Toast.makeText(this@WriteActivity, "5장까지 선택 가능합니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        // 이미지 어댑터에 이미지 추가 및 리사이클러뷰 표시
+                        imageAdapter.addImages(uris)
+                        binding.imageRecyclerView.visibility = RecyclerView.VISIBLE
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
-        }
 
         // 이미지 선택 버튼 클릭 시 갤러리 열기
         binding.imagechange.setOnClickListener {
@@ -73,41 +79,68 @@ class WriteActivity : AppCompatActivity() {
             requestGalleryLauncher.launch(intent)
         }
 
-        binding.btnMap.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
+//           데이터를 등록 가능하게 만들수 있는 코드 작성 부분
+        binding.btnInsetrt.setOnClickListener {
+            val title = binding.edTitle.text.toString()
+            val money = binding.edMoney.text.toString()
+            val content = binding.edcontent.text.toString()
+            val loc = binding.btnMap.text.toString()
+            val nick = MySharedpreferences.getUserNick(applicationContext);
+
+
+            RetrofitBuilder.api.insertListData(title,money,content,loc,nick).enqueue(object : Callback<Void> {
+                override fun onResponse(
+                    call: Call<Void>,
+                    response: Response<Void>
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@WriteActivity,"등록되었습니다.",Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.d("ysh", "listData is null")
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("error", t.localizedMessage)
+                }
+            })
+
+            binding.btnMap.setOnClickListener {
+                val intent = Intent(this, MapActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
-}
 
-class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+    class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
-    private var imageUris: MutableList<Uri> = mutableListOf()
+        private var imageUris: MutableList<Uri> = mutableListOf()
 
-    // 이미지 어댑터에 이미지 추가
-    fun addImages(uris: List<Uri>) {
-        imageUris.addAll(uris)
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        // 뷰홀더 생성
-        val binding = ItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ImageViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        // 뷰홀더와 데이터 바인딩
-        holder.bind(imageUris[position])
-    }
-
-    override fun getItemCount(): Int = imageUris.size
-
-    class ImageViewHolder(private val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        // 이미지 뷰홀더에 이미지 설정
-        fun bind(uri: Uri) {
-            binding.imageViewItem.setImageURI(uri)
+        // 이미지 어댑터에 이미지 추가
+        fun addImages(uris: List<Uri>) {
+            imageUris.addAll(uris)
+            notifyDataSetChanged()
         }
 
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
+            // 뷰홀더 생성
+            val binding =
+                ItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ImageViewHolder(binding)
+        }
+
+        override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+            // 뷰홀더와 데이터 바인딩
+            holder.bind(imageUris[position])
+        }
+        override fun getItemCount(): Int = imageUris.size
+
+        class ImageViewHolder(private val binding: ItemImageBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+            // 이미지 뷰홀더에 이미지 설정
+            fun bind(uri: Uri) {
+                binding.imageViewItem.setImageURI(uri)
+            }
+        }
     }
 }

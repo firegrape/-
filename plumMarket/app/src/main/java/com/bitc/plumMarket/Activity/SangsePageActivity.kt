@@ -37,7 +37,5 @@ class SangsePageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
     }
 }

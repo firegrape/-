@@ -34,6 +34,16 @@ interface Api {
         @Field("user_idx") idx: String
     ): Call<List<ChatList>>
 
+    @FormUrlEncoded
+    @POST("/insertList")
+    fun insertListData(
+        @Field("title") title: String,
+        @Field("money") money: String,
+        @Field("content") content: String,
+        @Field("loc") loc: String,
+        @Field("nick")nick:String
+    ): Call<Void>
+
     @GET("/selectList")
     fun getListData(): Call<List<ListData>>
 

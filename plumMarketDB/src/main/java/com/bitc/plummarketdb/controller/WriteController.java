@@ -24,21 +24,24 @@ public class WriteController {
     @RequestMapping(value = "/insertList", method = {RequestMethod.POST})
     @ResponseBody
     public void androidInsertList(HttpServletRequest request, Model model) throws Exception {
-//        String title = request.getParameter("title");
-//        String content = request.getParameter("content");
-//        String money1 = request.getParameter("money");
-//        int money = Integer.parseInt(money1);
-//        String nick = request.getParameter("nick");
-//        String loc = request.getParameter("loc");
+//         전송된 데이터를 파라미터로 받아오는 부분
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String nick = request.getParameter("nick");
+        String loc = request.getParameter("loc");
+        String money = request.getParameter("money");
+        int money1 = Integer.parseInt(money);
 
+        // ListDTO 객체를 생성하고 값을 설정합니다.
         ListDTO list = new ListDTO();
-
-        list.setListTitle("테스트내용");
-        list.setListContent("테스트내용");
-        list.setListMoney(0);
-        list.setListUserNick("테스터");
-        list.setListLoc("진구");
-
+        list.setListTitle(title);
+        list.setListContent(content);
+        list.setListMoney(money1);
+        list.setListUserNick(nick);
+        list.setListLoc(loc);
+        System.out.println(list);
+//
+//        // WriteService를 사용하여 리스트에 항목을 추가합니다.
         writeService.InsertList(list);
     }
 

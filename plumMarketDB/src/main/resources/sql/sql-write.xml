@@ -6,9 +6,10 @@
 <mapper namespace="com.bitc.plummarketdb.mapper.WriteMapper">
     <insert id="InsertList" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
         INSERT INTO
-            list( list_title, list_content, list_user_nick,  list_hit_cnt, list_cate, list_loc, list_money)
+            list(list_title, list_content, list_user_nick, list_hit_cnt, list_cate, list_loc, list_money)
         VALUES
-            ( #{listTitle}, #{listContent}, #{listUserNick}, '0', '0', #{listLoc}, '0')
+            (#{listTitle},#{listContent},#{listUserNick},'0','0',#{listLoc},#{listMoney})
+
     </insert>
 
     <select id="SelectList" resultType="com.bitc.plummarketdb.DTO.ListDTO">

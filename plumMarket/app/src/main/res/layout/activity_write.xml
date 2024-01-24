@@ -84,6 +84,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="제목을 입력하세요" />
@@ -103,6 +104,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="가격을 입력하세요" />
@@ -127,6 +129,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edcontent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="판매 금지 물품은 게시가 제한될수 있습니다" />
@@ -159,6 +162,7 @@
             android:padding="16dp">
 
             <Button
+                android:id="@+id/btn_insetrt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorAccent"
