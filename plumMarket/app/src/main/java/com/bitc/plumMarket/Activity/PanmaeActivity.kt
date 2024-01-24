@@ -3,14 +3,11 @@ package com.bitc.plumMarket.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.bitc.plumMarket.Adapter.ViewPager2Adapter
-import com.bitc.plumMarket.Fragment.Fragment1
-import com.bitc.plumMarket.Fragment.Fragment2
-import com.bitc.plumMarket.Fragment.Fragment3
-import com.bitc.plumMarket.R
+import com.bitc.plumMarket.Fragment.SellOngoingFragment
+import com.bitc.plumMarket.Fragment.SellCompletFragment
+import com.bitc.plumMarket.Fragment.SellHideFragment
 import com.bitc.plumMarket.databinding.ActivityPanmaeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -29,9 +26,9 @@ class PanmaeActivity : AppCompatActivity() {
     private fun initViewPager() {
         // ViewPager2 Adapter 셋팅
         val viewPager2Adapter = ViewPager2Adapter(this)
-        viewPager2Adapter.addFragment(Fragment1())
-        viewPager2Adapter.addFragment(Fragment2())
-        viewPager2Adapter.addFragment(Fragment3())
+        viewPager2Adapter.addFragment(SellOngoingFragment())
+        viewPager2Adapter.addFragment(SellCompletFragment())
+        viewPager2Adapter.addFragment(SellHideFragment())
 
         //Adapter 연결
         binding.ReviewPager2.apply {

@@ -2,7 +2,6 @@ package com.bitc.plummarketdb.controller;
 
 
 import com.bitc.plummarketdb.DTO.ListDTO;
-import com.bitc.plummarketdb.service.UserService;
 import com.bitc.plummarketdb.service.WriteService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,40 +39,99 @@ public class WriteController {
         list.setListUserNick("테스터");
         list.setListLoc("진구");
 
-
         writeService.InsertList(list);
     }
 
-        @RequestMapping(value = "/selectList", method = {RequestMethod.GET})
-        @ResponseBody
-        public String androidSelectList(HttpServletRequest request)throws Exception{
+    @RequestMapping(value = "/selectList", method = {RequestMethod.GET})
+    @ResponseBody
+    public String androidSelectList(HttpServletRequest request)throws Exception{
 
+        JSONObject data1 = new JSONObject();
 
-            JSONObject data1 = new JSONObject();
+        List<ListDTO> list1 = writeService.SelectList();
 
-            List<ListDTO> list1 = writeService.SelectList();
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO list : list1){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", list.getListIdx());
+            data.put("list_title", list.getListTitle());
+            data.put("list_content", list.getListContent());
+            data.put("list_user_nick", list.getListUserNick());
+            data.put("list_money", list.getListMoney());
 
-            JSONArray jsonArray = new JSONArray();
-            for(ListDTO list : list1){
-                JSONObject data = new JSONObject();
-                data.put("list_title", list.getListTitle());
-                data.put("list_content", list.getListContent());
-                data.put("list_user_nick", list.getListUserNick());
-
-
-                jsonArray.put(data);
-            }
-
-
-
-
-
-            return jsonArray.toString();
+            jsonArray.put(data);
         }
 
-
-
-
-
+        return jsonArray.toString();
     }
+
+    @RequestMapping(value = "/selectPanmaeList", method = {RequestMethod.POST})
+    @ResponseBody
+    public String androidPanmaeSelectList(HttpServletRequest request)throws Exception{
+        String userNick = request.getParameter("nick");
+
+        JSONObject data1 = new JSONObject();
+
+        List<ListDTO> list1 = writeService.PanmaeSelectList(userNick);
+
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO list : list1){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", list.getListIdx());
+            data.put("list_title", list.getListTitle());
+            data.put("list_content", list.getListContent());
+            data.put("list_user_nick", list.getListUserNick());
+            data.put("list_money", list.getListMoney());
+
+            jsonArray.put(data);
+        }
+
+        return jsonArray.toString();
+    }
+
+    @RequestMapping(value = "/updateSellReservation", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellReservation(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellReservation(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updatesellComplete", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updatesellComplete(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updatesellComplete(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updateSellDelete", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellDelete(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellDelete(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
 

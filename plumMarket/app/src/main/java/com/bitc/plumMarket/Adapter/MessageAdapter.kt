@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bitc.plumMarket.Data.Message
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.R
 
 class MessageAdapter(private val context: Context, private val messageList: ArrayList<Message>):
@@ -48,8 +49,9 @@ class MessageAdapter(private val context: Context, private val messageList: Arra
 
         //메시지값
         val currentMessage = messageList[position]
+        val idx = MySharedpreferences.getUserIdx(context)
 
-        return if(currentMessage.sendId?.equals("1") == true){
+        return if(idx.equals(currentMessage.sendId)){
             send
         }else{
             receive

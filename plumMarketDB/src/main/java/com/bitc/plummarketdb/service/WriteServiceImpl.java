@@ -21,4 +21,24 @@ public class WriteServiceImpl implements WriteService {
     public List<ListDTO> SelectList() throws Exception {
         return writeMapper.SelectList();
     }
+
+    @Override
+    public List<ListDTO> PanmaeSelectList(String userNick) throws Exception {
+        return writeMapper.PanmaeSelectList(userNick);
+    }
+
+    @Override
+    public void updateSellReservation(ListDTO list) throws Exception {
+        writeMapper.updateSellReservation(list);
+    }
+
+    @Override
+    public void updatesellComplete(ListDTO list) throws Exception {
+        writeMapper.updatesellComplete(list);
+    }
+
+    @Override
+    public void updateSellDelete(ListDTO list) throws Exception {
+        writeMapper.updateSellDelete(list);
+    }
 }

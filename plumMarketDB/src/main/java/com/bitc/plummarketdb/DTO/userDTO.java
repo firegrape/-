@@ -14,4 +14,7 @@ public class userDTO {
     private String userDeletedYn;
     private String userFavlist;
     private int userRating;
+    private int sendIdx;
+    private int receiveIdx;
+    private String userProfile;
 }

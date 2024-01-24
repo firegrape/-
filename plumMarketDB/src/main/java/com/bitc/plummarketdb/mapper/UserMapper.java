@@ -11,4 +11,6 @@ public interface UserMapper {
     userDTO getUserInfo(String userId)throws Exception;
 
     void insertUser(userDTO user)throws Exception;
+
+    void UploadProFile(userDTO user)throws Exception;
 }

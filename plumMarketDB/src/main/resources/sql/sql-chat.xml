@@ -4,5 +4,20 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bitc.plummarketdb.mapper.ChatMapper">
+    <select id="selectChatList" parameterType="int" resultType="com.bitc.plummarketdb.DTO.userDTO">
 
+        SELECT user_nick, user_idx, send_idx, receive_idx
+        FROM user AS u
+        JOIN chat AS c ON u.user_idx = c.send_idx OR u.user_idx = c.receive_idx
+        WHERE (c.send_idx = #{userIdx} OR c.receive_idx = #{userIdx}) AND u.user_idx != #{userIdx}
+
+
+    </select>
+    <delete id="deleteChatList" parameterType="com.bitc.plummarketdb.DTO.userDTO">
+
+        delete from
+        chat
+        where send_idx = #{sendIdx} and receive_idx = #{receiveIdx} or send_idx = #{receiveIdx} and receive_idx= #{sendIdx}
+
+    </delete>
 </mapper>

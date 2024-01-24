@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bitc.plumMarket.Data.Message
 import com.bitc.plumMarket.Adapter.MessageAdapter
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.databinding.ActivityChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,10 +36,11 @@ class ChatActivity : AppCompatActivity() {
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.chatRecyclerView.adapter = messageAdapter
 
-        val senderUid = "1"
+        //보내는 유저
+        val senderUid = MySharedpreferences.getUserIdx(this)
 
         //넘어온 데이터 변수에 담기
-        receiverName = intent.getStringExtra("name").toString()
+        receiverName = intent.getStringExtra("nick").toString()
         receiverUid = intent.getStringExtra("uId").toString()
 
         //보낸이방

@@ -6,12 +6,17 @@
 <mapper namespace="com.bitc.plummarketdb.mapper.UserMapper">
     <select id="isUserInfo" parameterType="Map" resultType="int">
         SELECT
-        count(*)AS cnt
-        FROM user
-        WHERE user_id = #{userId}
-        AND user_pw = #{userPw}
-        AND user_deleted_yn = 'N';
+            count(*)AS cnt
+        FROM
+            user
+        WHERE
+            user_id = #{userId}
+        AND
+            user_pw = #{userPw}
+        AND
+            user_deleted_yn = 'N';
     </select>
+
     <select id="getUserInfo" parameterType="String" resultType="com.bitc.plummarketdb.DTO.userDTO">
         SELECT
             user_idx,
@@ -23,16 +28,27 @@
             user_phone_num,
             user_deleted_yn,
             user_favlist,
-            user_rating
+            user_rating,
+            user_profile
         FROM
             user
         WHERE
             user_id= #{userId}
     </select>
+
     <insert id="insertUser" parameterType="com.bitc.plummarketdb.DTO.userDTO">
         INSERT INTO
             user (user_id, user_pw, user_nick, user_email)
         VALUES
             (#{userId}, #{userPw}, #{userNick}, #{userEmail})
     </insert>
+
+    <update id="UploadProFile" parameterType="com.bitc.plummarketdb.DTO.userDTO">
+        UPDATE
+            user
+        SET
+            user_profile = #{userProfile}
+        WHERE
+            user_id = #{userId}
+    </update>
 </mapper>

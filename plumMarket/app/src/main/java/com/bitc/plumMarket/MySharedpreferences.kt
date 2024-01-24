@@ -8,6 +8,18 @@ import com.bitc.plumMarket.Fragment.MyFragment
 object MySharedpreferences {
     private val MY_ACCOUNT : String = "account"
 
+
+    fun setUserIdx(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("MY_IDX", input)
+        editor.commit()
+    }
+    fun getUserIdx(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("MY_IDX", "").toString()
+    }
+
     fun setUserAddress(context: Context, input: String) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()
@@ -66,6 +78,17 @@ object MySharedpreferences {
     fun getUserPass(context: Context): String {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         return prefs.getString("MY_PASS", "").toString()
+    }
+    fun setFileUrl(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("FILEURI", input)
+        editor.commit()
+    }
+
+    fun getFileUrl(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("FILEURI", "").toString()
     }
 
     fun clearUser(context: Context) {

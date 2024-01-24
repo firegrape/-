@@ -1,7 +1,5 @@
 package com.bitc.plumMarket.Data
 
-import com.google.gson.annotations.SerializedName
-
 data class ListData(
 
     val list_idx: Int,
@@ -14,4 +12,17 @@ data class ListData(
     val list_loc: String,
     val list_money: Int
 
-)
+){
+    constructor(idx:Int,title: String, money: Int) : this(
+        list_idx = idx,
+        list_title = title,
+        list_content = "",
+        list_user_nick = "",
+        list_create_date = "",
+        list_completed_yn = "",
+        list_cate = "",
+        list_loc = "",
+        list_money = money
+    )
+}
+

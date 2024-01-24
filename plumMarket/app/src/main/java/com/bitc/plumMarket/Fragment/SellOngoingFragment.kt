@@ -5,13 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bitc.plumMarket.Adapter.ListAdapter
-import com.bitc.plumMarket.Data.ChatData
+import com.bitc.plumMarket.Adapter.ListSellAdapter
 import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.R
 import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.databinding.ActivityListRecyclerViewBinding
@@ -19,8 +21,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment() {
 
+class SellOngoingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +49,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        RetrofitBuilder.api.getListData().enqueue(object: Callback<List<ListData>> {
+        val nick =  MySharedpreferences.getUserNick(requireContext())
+
+        RetrofitBuilder.api.selectPanmaeList(nick).enqueue(object: Callback<List<ListData>> {
             override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {
                 if(response.isSuccessful){
                     val list = response.body()
@@ -56,12 +60,12 @@ class HomeFragment : Fragment() {
                         // listData를 활용하여 필요한 처리를 수행해주세요
                         // 예시: listData를 순회하며 각 객체의 필드를 읽어옴
                         for (data in list) {
+                            val idx = data.list_idx
                             val title = data.list_title
                             val money = data.list_money
-                            val idx = data.list_idx
 
                             items.add(ListData(idx,title,money))
-                            val listAdapter = ListAdapter(items)
+                            val listSellAdapter = ListSellAdapter(items, activity as AppCompatActivity)
                             // 변수에 값을 넣어 사용하거나 처리해주세요
                             // 예시: 로그로 출력
 
@@ -71,7 +75,7 @@ class HomeFragment : Fragment() {
                             // Fragment의 레이아웃에서 리사이클러뷰를 찾아서 설정
                             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewList)
                             recyclerView.layoutManager = linearLayoutManager
-                            recyclerView.adapter = listAdapter
+                            recyclerView.adapter = listSellAdapter
                             recyclerView.addItemDecoration(
                                 DividerItemDecoration(
                                     requireContext(),

@@ -43,6 +43,7 @@ public class LoginController {
                 data.put("delete", user.getUserDeletedYn());
                 data.put("favlist", user.getUserFavlist());
                 data.put("rating", user.getUserRating());
+                data.put("user_profile",user.getUserProfile());
 
                 return data.toString();
             } else {
@@ -60,18 +61,29 @@ public class LoginController {
     @ResponseBody
     public void JoinPage(HttpServletRequest request, userDTO user) {
 
-
         try {
             user.setUserId(request.getParameter("id"));
             user.setUserPw(request.getParameter("pw"));
             user.setUserNick(request.getParameter("nickname"));
             user.setUserEmail(request.getParameter("email"));
 
-
             userService.insertUser(user);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/profileUpload", method = {RequestMethod.POST})
+    @ResponseBody
+    public void profileUpload(HttpServletRequest request) throws Exception {
+        String name = request.getParameter("profileName");
+        String id = request.getParameter("uid");
+        userDTO user = new userDTO();
+
+        user.setUserId(id);
+        user.setUserProfile(name);
+
+        userService.UploadProFile(user);
     }
 }

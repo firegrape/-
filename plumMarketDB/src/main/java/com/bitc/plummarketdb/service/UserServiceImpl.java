@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService {
     public void insertUser(userDTO user) throws Exception {
         userMapper.insertUser(user);
     }
+
+    @Override
+    public void UploadProFile(userDTO user) throws Exception {
+        userMapper.UploadProFile(user);
+    }
 }

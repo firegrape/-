@@ -3,22 +3,62 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
-
 <mapper namespace="com.bitc.plummarketdb.mapper.WriteMapper">
     <insert id="InsertList" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
-        INSERT INTO list( list_title, list_content, list_user_nick,  list_hit_cnt, list_cate, list_loc, list_money) VALUES
-        ( #{listTitle}, #{listContent}, #{listUserNick}, '0', '0', #{listLoc}, '0')
-
-
-
+        INSERT INTO
+            list( list_title, list_content, list_user_nick,  list_hit_cnt, list_cate, list_loc, list_money)
+        VALUES
+            ( #{listTitle}, #{listContent}, #{listUserNick}, '0', '0', #{listLoc}, '0')
     </insert>
 
     <select id="SelectList" resultType="com.bitc.plummarketdb.DTO.ListDTO">
-
-        select list_idx,list_title,list_content,list_user_nick,list_create_date,list_completed_yn,list_cate
-        ,list_loc,list_money from list
-
+        SELECT
+            list_idx,list_title,list_content,list_user_nick,list_create_date,list_completed_yn,list_cate
+            ,list_loc,list_money
+        FROM
+            list
+        ORDER BY
+            list_idx
+        DESC
     </select>
+
+    <select id="PanmaeSelectList" parameterType="String" resultType="com.bitc.plummarketdb.DTO.ListDTO">
+        SELECT
+            list_idx, list_title, list_content, list_user_nick, list_create_date, list_completed_yn,list_cate, list_loc, list_money
+        FROM
+            list
+        WHERE
+            list_user_nick = #{userNick}
+        AND
+            list_cate = 0
+        AND
+            list_sell_state = 0
+        AND
+            list_completed_yn = 'N'
+        ORDER BY
+            list_idx
+        DESC;
+    </select>
+
+    <update id="updateSellReservation" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+
+    </update>
+    <update id="updatesellComplete" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_sell_state = 2
+        WHERE
+            list_idx = #{listIdx}
+    </update>
+
+    <update id="updateSellDelete" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_completed_yn = 'Y'
+        WHERE
+            list_idx = #{listIdx}
+    </update>
 
 </mapper>

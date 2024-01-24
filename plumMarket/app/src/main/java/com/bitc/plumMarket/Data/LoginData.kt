@@ -10,5 +10,8 @@ data class LoginData(
     val user_phone_num: String,
     val user_deleted_yn: String,
     val user_favlist: String,
-    val user_rating: String
+    val user_rating: String,
+    val send_idx : Int,
+    val receive_idx : Int,
+    val user_profile : String
 )
