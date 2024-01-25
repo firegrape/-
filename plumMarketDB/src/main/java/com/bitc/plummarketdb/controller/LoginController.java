@@ -31,7 +31,7 @@ public class LoginController {
             if (userChk == 1) {
 
                 JSONObject data = new JSONObject();
-                userDTO user = userService.getUserInfo(androidID);
+                userDTO user = userService.UserLogin(androidID);
 
                 data.put("user_idx", user.getUserIdx());
                 data.put("user_id", user.getUserId());

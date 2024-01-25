@@ -17,4 +17,6 @@ public class userDTO {
     private int sendIdx;
     private int receiveIdx;
     private String userProfile;
+    private String userComment;
+    private String listCount;
 }

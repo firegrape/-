@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bitc.plummarketdb.mapper.ListImageMapper">
+<mapper namespace="com.bitc.plummarketdb.mapper.ListMapper">
+    <update id="updateHit" parameterType="String">
+        update list set list_hit_cnt = list_hit_cnt + 1 where list_idx = #{idx}
+
+
+
+    </update>
 
 </mapper>

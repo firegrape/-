@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.github.PhilJay:MpAndroidChart:v3.1.0")
+
     implementation("com.google.firebase:firebase-storage")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
@@ -57,6 +60,7 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview-selection:1.1.0-rc03")
     implementation ("androidx.recyclerview:recyclerview:1.1.0")
     implementation ("androidx.cardview:cardview:1.0.0")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

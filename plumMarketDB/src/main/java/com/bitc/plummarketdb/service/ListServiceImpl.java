@@ -14,4 +14,9 @@ public class ListServiceImpl implements ListService {
     public ListDTO selectListInfo() throws Exception {
         return null;
     }
+
+    @Override
+    public void updateHit(String idx) throws Exception {
+        listMapper.updateHit(idx);
+    }
 }

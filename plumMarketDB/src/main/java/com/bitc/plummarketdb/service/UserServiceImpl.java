@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public userDTO getUserInfo(String userId) throws Exception {
-        return userMapper.getUserInfo(userId);
+    public userDTO getUserInfo(String nick) throws Exception {
+        return userMapper.getUserInfo(nick);
     }
 
     @Override
@@ -29,5 +29,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void UploadProFile(userDTO user) throws Exception {
         userMapper.UploadProFile(user);
+    }
+
+    @Override
+    public void MinusRating(String nick) throws Exception {
+        userMapper.MinusRating(nick);
+    }
+
+    @Override
+    public void PlusRating(String nick) throws Exception {
+        userMapper.PlusRating(nick);
+    }
+
+    @Override
+    public userDTO UserLogin(String androidID) throws Exception {
+        return userMapper.UserLogin(androidID);
     }
 }

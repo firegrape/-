@@ -10,10 +10,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bitc.plumMarket.Activity.SangsePageActivity
 import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.ViewHolder.ListViewHolder
 import com.bitc.plumMarket.databinding.ListItemBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,6 +62,19 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
       // SangsePageActivity로 이동하면서 선택된 아이템의 list_idx 값을 전달
       val intent = Intent(holder.itemView.context, SangsePageActivity::class.java)
       intent.putExtra("selected_idx", selectedIdx)
+
+      RetrofitBuilder.api.CountHint(selectedIdx.toString()).enqueue(object: Callback<Void> {
+        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+
+
+        }
+
+        override fun onFailure(call: Call<Void>, t: Throwable) {
+          Log.d("error", t.localizedMessage)
+
+
+        }
+      })
       holder.itemView.context.startActivity(intent)
     }
   }

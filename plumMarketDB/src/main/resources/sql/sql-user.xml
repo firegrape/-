@@ -17,6 +17,25 @@
             user_deleted_yn = 'N';
     </select>
 
+    <select id="UserLogin" parameterType="String" resultType="com.bitc.plummarketdb.DTO.userDTO">
+        SELECT
+        user_idx,
+        user_id,
+        user_nick,
+        user_pw,
+        user_email,
+        user_adress,
+        user_phone_num,
+        user_deleted_yn,
+        user_favlist,
+        user_rating,
+        user_profile,
+        user_comment
+        FROM
+        user
+        WHERE
+        user_id= #{id}
+    </select>
     <select id="getUserInfo" parameterType="String" resultType="com.bitc.plummarketdb.DTO.userDTO">
         SELECT
             user_idx,
@@ -29,11 +48,13 @@
             user_deleted_yn,
             user_favlist,
             user_rating,
-            user_profile
+            user_profile,
+            user_comment,
+        (select count(*) from user join list on user.user_nick= list.list_user_nick where user_nick = #{nick})as list_count
         FROM
             user
         WHERE
-            user_id= #{userId}
+            user_nick= #{nick}
     </select>
 
     <insert id="insertUser" parameterType="com.bitc.plummarketdb.DTO.userDTO">
@@ -50,5 +71,21 @@
             user_profile = #{userProfile}
         WHERE
             user_id = #{userId}
+    </update>
+
+
+    <update id="PlusRating" parameterType="String">
+        update user set user_rating = user_rating + 1 where user_nick = #{nick}
+
+
+
+    </update>
+
+
+    <update id="MinusRating" parameterType="String">
+        update user set user_rating = user_rating - 1 where user_nick = #{nick}
+
+
+
     </update>
 </mapper>

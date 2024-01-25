@@ -50,8 +50,9 @@ class SangsePageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.btnHome.setOnClickListener {
-            intent = Intent(this, MainActivity2::class.java)
+        binding.ivUser.setOnClickListener {
+            val intent = Intent(this, SangsePageActivity::class.java)
+
             startActivity(intent)
         }
 

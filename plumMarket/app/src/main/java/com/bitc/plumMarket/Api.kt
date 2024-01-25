@@ -5,6 +5,9 @@ import com.bitc.plumMarket.Data.GansimData
 import com.bitc.plumMarket.Data.ListData
 import com.bitc.plumMarket.Data.ListImageDTO
 import com.bitc.plumMarket.Data.LoginData
+import com.bitc.plumMarket.Data.UserDTO
+
+
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -30,6 +33,8 @@ interface Api {
         @Field("pw2")pw2: String,
         @Field("nickname")nickname: String,
         @Field("email")email: String,): Call<Void>
+
+
 
     @FormUrlEncoded
     @POST("/chatList")
@@ -142,6 +147,28 @@ interface Api {
     @POST("/SearchListTitle")
     fun SearchListTitle(
         @Field("Search") Search: String): Call<List<ListData>>
+
+
+    @FormUrlEncoded
+    @POST("/countHit")
+    fun CountHint(
+        @Field("idx") idx: String):Call<Void>
+
+
+    @FormUrlEncoded
+    @POST("/userInfo")
+    fun userInfo (@Field("nick") nick:String):Call<UserDTO>
+
+
+    @FormUrlEncoded
+    @POST("/mRating")
+    fun MinusRating(@Field("nick") nick:String):Call<Void>
+
+
+    @FormUrlEncoded
+    @POST("/pRating")
+    fun PlusRating(@Field("nick") nick:String):Call<Void>
+
 }
 
 
