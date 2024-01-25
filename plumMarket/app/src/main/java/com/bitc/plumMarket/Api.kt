@@ -137,6 +137,11 @@ interface Api {
 
     @GET("/gansim")
     fun GansimList(@Query("userId") userId:String): Call<List<GansimData>>
+
+    @FormUrlEncoded
+    @POST("/SearchListTitle")
+    fun SearchListTitle(
+        @Field("Search") Search: String): Call<List<ListData>>
 }
 
 

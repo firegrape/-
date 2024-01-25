@@ -29,4 +29,6 @@ public interface WriteMapper {
 
 
     void InsertImageList(ListImageDTO item)throws Exception;
+
+    List<ListDTO> SearchListTitle(String search)throws Exception;
 }

@@ -4,13 +4,30 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bitc.plummarketdb.mapper.WriteMapper">
-    <insert id="InsertList" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+    <insert id="InsertList" parameterType="com.bitc.plummarketdb.DTO.ListDTO" useGeneratedKeys="true" keyProperty="listIdx">
         INSERT INTO
             list(list_title, list_content, list_user_nick, list_hit_cnt, list_cate, list_loc, list_money)
         VALUES
-            (#{listTitle},#{listContent},#{listUserNick},'0','0',#{listLoc},#{listMoney})
+            (#{listTitle},#{listContent},'테스터','0','0',#{listLoc},#{listMoney})
 
     </insert>
+    <select id="SearchListTitle" parameterType="String" resultType="com.bitc.plummarketdb.DTO.ListDTO">
+        SELECT
+        list_idx, list_title, list_content, list_user_nick, list_create_date, list_completed_yn, list_cate
+        , list_loc, list_money,     COALESCE(
+        (SELECT b.list_image_name FROM list_image AS b WHERE list.list_idx = b.list_image_list_idx LIMIT 1),
+        'noImage'
+        ) AS list_image_name
+        FROM
+        list
+        WHERE
+        list_title LIKE '%${Search}%'
+        OR
+        list_content LIKE '%${Search}%'
+        ORDER BY
+        list_idx
+        DESC
+    </select>
 
     <insert id="InsertImageList" parameterType="com.bitc.plummarketdb.DTO.ListImageDTO">
         insert into list_image(list_image_name,list_image_list_idx)

@@ -47,10 +47,3 @@ class ListSellAdapter(
     recyclerView.requestLayout()
   }
 }
-
-
-
-
-
-
-

@@ -59,7 +59,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.menu_search->{
-
+                val intent = Intent(this,SearchActivity::class.java)
+                startActivity(intent)
             }
 
         }

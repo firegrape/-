@@ -58,4 +58,9 @@ public class WriteServiceImpl implements WriteService {
     public void InsertImageList(ListImageDTO item) throws Exception {
         writeMapper.InsertImageList(item);
     }
+
+    @Override
+    public List<ListDTO> SearchListTitle(String search) throws Exception {
+        return writeMapper.SearchListTitle(search);
+    }
 }

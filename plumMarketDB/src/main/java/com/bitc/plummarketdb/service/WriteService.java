@@ -25,4 +25,6 @@ public interface WriteService {
 
     void updateSellDelete(ListDTO list)throws Exception;
     void InsertImageList(ListImageDTO item)throws Exception;
+
+    List<ListDTO> SearchListTitle(String search)throws Exception;
 }
