@@ -1,6 +1,7 @@
 package com.bitc.plumMarket
 
 import com.bitc.plumMarket.Data.ChatList
+import com.bitc.plumMarket.Data.GansimData
 import com.bitc.plumMarket.Data.ListData
 import com.bitc.plumMarket.Data.ListImageDTO
 import com.bitc.plumMarket.Data.LoginData
@@ -13,6 +14,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface Api {
     @FormUrlEncoded
@@ -133,6 +135,8 @@ interface Api {
     ): Call<ListData>
 
 
+    @GET("/gansim")
+    fun GansimList(@Query("userId") userId:String): Call<List<GansimData>>
 }
 
 

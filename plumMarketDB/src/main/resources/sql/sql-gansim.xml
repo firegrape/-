@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.plummarketdb.mapper.GansimMapper">
+    <select id="selectGansimList" parameterType="String" resultType="com.bitc.plummarketdb.DTO.GansimDTO">
+        select fav_list_idx,
+        (select list_title from list where list_idx = a.fav_list_list_idx) fav_title,
+        (select list_money from list where list_idx = a.fav_list_list_idx) fav_money
+        from fav_list a
+        where fav_list_user_id = #{id}
+    </select>
+
+</mapper>
