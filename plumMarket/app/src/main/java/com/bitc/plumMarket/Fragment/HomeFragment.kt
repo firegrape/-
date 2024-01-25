@@ -59,8 +59,9 @@ class HomeFragment : Fragment() {
                             val title = data.list_title
                             val money = data.list_money
                             val idx = data.list_idx
+                            val image = data.list_image_name
 
-                            items.add(ListData(idx,title,money))
+                            items.add(ListData(idx,title,money, image))
                             val listAdapter = ListAdapter(items)
                             // 변수에 값을 넣어 사용하거나 처리해주세요
                             // 예시: 로그로 출력

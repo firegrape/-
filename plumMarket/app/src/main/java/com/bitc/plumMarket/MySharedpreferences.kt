@@ -2,7 +2,9 @@ package com.bitc.plumMarket
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.bitc.plumMarket.Fragment.MyFragment
+import android.net.Uri
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 object MySharedpreferences {
@@ -18,6 +20,16 @@ object MySharedpreferences {
     fun getUserIdx(context: Context): String {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         return prefs.getString("MY_IDX", "").toString()
+    }
+    fun setListIdx(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("LIST_IDX", input)
+        editor.commit()
+    }
+    fun getListIdx(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("LIST_IDX", "").toString()
     }
 
     fun setUserAddress(context: Context, input: String) {
@@ -91,6 +103,24 @@ object MySharedpreferences {
         return prefs.getString("FILEURI", "").toString()
     }
 
+    fun setFileUrls(context: Context, input: List<Uri>) {
+        val gson = Gson()
+        val json = gson.toJson(input)
+
+        val prefs: SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        editor.putString("FILEURIS", json)
+        editor.apply()
+    }
+
+    fun getFileUrls(context: Context): List<Uri> {
+        val prefs: SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val json = prefs.getString("FILEURIS", "")
+
+        val gson = Gson()
+        val type = object : TypeToken<List<Uri>>() {}.type
+        return gson.fromJson(json, type) ?: emptyList()
+    }
     fun clearUser(context: Context) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()

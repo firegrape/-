@@ -6,6 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.PanmaeActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <LinearLayout
         android:id="@+id/ww"
@@ -14,6 +28,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
+
 
         <!-- 페이지 상단 -->
         <LinearLayout
@@ -92,13 +107,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="닉네임"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                =
             </LinearLayout>
         </LinearLayout>
 
@@ -111,15 +120,7 @@
             android:background="@drawable/circle_background"
             android:backgroundTint="@color/colorAccent">
 
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:text="사용자 이름"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+
         </LinearLayout>
 
 

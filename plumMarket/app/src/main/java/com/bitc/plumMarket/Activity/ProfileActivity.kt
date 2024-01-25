@@ -3,10 +3,15 @@ package com.bitc.plumMarket.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bitc.plumMarket.MySharedpreferences
+import com.bitc.plumMarket.R
 import com.bitc.plumMarket.databinding.ActivityProfileBinding
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : AppCompatActivity() {
@@ -15,10 +20,17 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)	//툴바 사용 설정
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)	//왼쪽 버튼 사용설정(기본은 뒤로가기)
+
+        supportActionBar!!.setDisplayShowTitleEnabled(true)		//타이틀 보이게 설정
 
         val fileName = MySharedpreferences.getFileUrl(this)
 
         binding.tvUserId.text = MySharedpreferences.getUserNick(applicationContext)
+
+
 
 
         val storage = FirebaseStorage.getInstance()
@@ -41,7 +53,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 //       뒤로 가기 버튼
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, MypageActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
@@ -71,7 +83,37 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnGallery.setOnClickListener {
             val intent = Intent(this, profilesojoungActivity::class.java)
             startActivity(intent)
+
+
         }
 
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.mainaction, menu)		//작성한 메뉴파일 설정
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item!!.itemId){
+            android.R.id.home->{	//각 버튼 마다 스낵바 메세지로 기능 구현
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_search->{
+
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    //액션버튼 메뉴 액션바에 집어 넣기
+
+
+
 }

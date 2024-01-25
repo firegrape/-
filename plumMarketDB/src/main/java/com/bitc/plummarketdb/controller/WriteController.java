@@ -61,6 +61,7 @@ public class WriteController {
             data.put("list_content", list.getListContent());
             data.put("list_user_nick", list.getListUserNick());
             data.put("list_money", list.getListMoney());
+            data.put("list_image_name", list.getListImageName());
 
             jsonArray.put(data);
         }
@@ -73,9 +74,55 @@ public class WriteController {
     public String androidPanmaeSelectList(HttpServletRequest request)throws Exception{
         String userNick = request.getParameter("nick");
 
+        List<ListDTO> list1 = writeService.PanmaeSelectList(userNick);
+
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO list : list1){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", list.getListIdx());
+            data.put("list_title", list.getListTitle());
+            data.put("list_content", list.getListContent());
+            data.put("list_user_nick", list.getListUserNick());
+            data.put("list_money", list.getListMoney());
+
+            jsonArray.put(data);
+        }
+
+        return jsonArray.toString();
+    }
+
+    @RequestMapping(value = "/selectPanmaeCompleteList", method = {RequestMethod.POST})
+    @ResponseBody
+    public String selectPanmaeCompleteList(HttpServletRequest request)throws Exception{
+        String userNick = request.getParameter("nick");
+
         JSONObject data1 = new JSONObject();
 
-        List<ListDTO> list1 = writeService.PanmaeSelectList(userNick);
+        List<ListDTO> list1 = writeService.PanmaeSelectCompleteList(userNick);
+
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO list : list1){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", list.getListIdx());
+            data.put("list_title", list.getListTitle());
+            data.put("list_content", list.getListContent());
+            data.put("list_user_nick", list.getListUserNick());
+            data.put("list_money", list.getListMoney());
+
+            jsonArray.put(data);
+        }
+
+        return jsonArray.toString();
+    }
+
+    @RequestMapping(value = "/selectPanmaeHideList", method = {RequestMethod.POST})
+    @ResponseBody
+    public String selectPanmaeHideList(HttpServletRequest request)throws Exception{
+        String userNick = request.getParameter("nick");
+
+        JSONObject data1 = new JSONObject();
+
+        List<ListDTO> list1 = writeService.PanmaeSelectHideList(userNick);
 
         JSONArray jsonArray = new JSONArray();
         for(ListDTO list : list1){
@@ -107,15 +154,30 @@ public class WriteController {
         }
     }
 
-    @RequestMapping(value = "/updatesellComplete", method = {RequestMethod.POST})
+    @RequestMapping(value = "/updateSellComplete", method = {RequestMethod.POST})
     @ResponseBody
-    public void updatesellComplete(HttpServletRequest request, ListDTO list)throws Exception {
+    public void updateSellComplete(HttpServletRequest request, ListDTO list)throws Exception {
 
         try {
             String idxString = request.getParameter("idx");
             int listIdx = Integer.parseInt(idxString);
             list.setListIdx(listIdx);
-            writeService.updatesellComplete(list);
+            writeService.updateSellComplete(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updateSellHide", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellHide(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellHide(list);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -62,5 +62,10 @@ class MypageActivity : AppCompatActivity() {
             intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+        binding.logoutButton.setOnClickListener(){
+            MySharedpreferences.clearUser(applicationContext)
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

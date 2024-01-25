@@ -2,6 +2,7 @@ package com.bitc.plumMarket
 
 import com.bitc.plumMarket.Data.ChatList
 import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.Data.ListImageDTO
 import com.bitc.plumMarket.Data.LoginData
 import com.google.gson.Gson
 import retrofit2.Call
@@ -42,7 +43,11 @@ interface Api {
         @Field("content") content: String,
         @Field("loc") loc: String,
         @Field("nick")nick:String
-    ): Call<Void>
+    ): Call<Int>
+
+    @POST("/insertImage")
+    fun insertImage(@Body imageList: MutableList<ListImageDTO>): Call<Void>
+
 
     @GET("/selectList")
     fun getListData(): Call<List<ListData>>
@@ -69,6 +74,18 @@ interface Api {
         @Field("nick")nick:String):Call<List<ListData>>
 
     @FormUrlEncoded
+    @POST("/selectPanmaeCompleteList")
+    fun selectPanmaeCompleteList(
+        @Field("nick")nick:String):Call<List<ListData>>
+
+    @FormUrlEncoded
+    @POST("/selectPanmaeHideList")
+    fun selectPanmaeHideList(
+        @Field("nick")nick:String):Call<List<ListData>>
+
+
+
+    @FormUrlEncoded
     @POST("/updateSellReservation")
     fun updateSellReservation(
         @Field("idx")idx:String): Call<Void>
@@ -84,6 +101,11 @@ interface Api {
         @Field("idx")idx:String): Call<Void>
 
     @FormUrlEncoded
+    @POST("/updateSellHide")
+    fun updateSellHide(
+        @Field("idx")idx:String): Call<Void>
+
+    @FormUrlEncoded
     @POST("/writeList")
     fun writeListData(
         @Field("title") title: String,
@@ -92,6 +114,24 @@ interface Api {
         @Field("content") content: String,
 
         ): Call<Void>
+
+
+    @FormUrlEncoded
+    @POST("/updateList")
+    fun UpdateList(
+        @Field("title") title: String,
+        @Field("money") money: String,
+        @Field("content") content: String,
+        @Field("idx") idx: String,
+        @Field("loc") loc: String
+    ): Call<Void>
+
+    @FormUrlEncoded
+    @POST("/SangesList")
+    fun getListData(
+        @Field("idx") idx: String,
+    ): Call<ListData>
+
 
 }
 

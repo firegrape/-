@@ -2,16 +2,21 @@ package com.bitc.plumMarket.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.bitc.plumMarket.Adapter.ViewPager2Adapter
+import com.bitc.plumMarket.Fragment.OnSellCompleteListener
+import com.bitc.plumMarket.Fragment.SellCompleteFragment
 import com.bitc.plumMarket.Fragment.SellOngoingFragment
-import com.bitc.plumMarket.Fragment.SellCompletFragment
+
 import com.bitc.plumMarket.Fragment.SellHideFragment
+import com.bitc.plumMarket.R
 import com.bitc.plumMarket.databinding.ActivityPanmaeBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class PanmaeActivity : AppCompatActivity() {
+class PanmaeActivity : AppCompatActivity(), OnSellCompleteListener {
 
     private lateinit var binding: ActivityPanmaeBinding
 
@@ -27,7 +32,7 @@ class PanmaeActivity : AppCompatActivity() {
         // ViewPager2 Adapter 셋팅
         val viewPager2Adapter = ViewPager2Adapter(this)
         viewPager2Adapter.addFragment(SellOngoingFragment())
-        viewPager2Adapter.addFragment(SellCompletFragment())
+        viewPager2Adapter.addFragment(SellCompleteFragment())
         viewPager2Adapter.addFragment(SellHideFragment())
 
         //Adapter 연결
@@ -50,6 +55,7 @@ class PanmaeActivity : AppCompatActivity() {
             }
         }.attach()
 
+
         // 뒤로가기 버튼 사용 마이페이지 이동
         binding.btnBack.setOnClickListener {
             startActivity(Intent(this, MypageActivity::class.java))
@@ -59,5 +65,9 @@ class PanmaeActivity : AppCompatActivity() {
         binding.writeButton.setOnClickListener {
             startActivity(Intent(this, WriteActivity::class.java))
         }
+    }
+
+    override fun onSellComplete() {
+        TODO("Not yet implemented")
     }
 }

@@ -4,6 +4,7 @@ package com.bitc.plumMarket.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,8 @@ import com.bitc.plumMarket.Activity.SangsePageActivity
 import com.bitc.plumMarket.Data.ListData
 import com.bitc.plumMarket.ViewHolder.ListViewHolder
 import com.bitc.plumMarket.databinding.ListItemBinding
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 
 
 class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -27,6 +30,27 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
     bind.tvListIdx.text = items[position].list_idx.toString()
     bind.tvListTitle.text = items[position].list_title
     bind.tvListMoney.text = items[position].list_money.toString() + "원"
+
+    val fileName = items[position].list_image_name
+
+    val storage = FirebaseStorage.getInstance()
+    val storageReference = storage.getReference("image")
+    Log.d("image33",fileName)
+
+    if (fileName.equals("22") or fileName.equals(null)) {
+      Log.d("image", "데이터 없음")
+
+
+    } else {
+      val pathReference = storageReference.child(fileName)
+      pathReference.downloadUrl.addOnSuccessListener { uri ->
+        Glide.with(holder.itemView.context).load(uri).into(bind.tvListImage);
+      }.addOnFailureListener {
+        Log.d("image1", "가져오기 실패")
+      }
+
+
+    }
 
     bind.tvListTitle.setOnClickListener() {
       val selectedIdx = items[position].list_idx

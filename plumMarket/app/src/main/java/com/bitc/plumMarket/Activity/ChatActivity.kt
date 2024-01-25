@@ -1,11 +1,15 @@
 package com.bitc.plumMarket.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bitc.plumMarket.Data.Message
 import com.bitc.plumMarket.Adapter.MessageAdapter
 import com.bitc.plumMarket.MySharedpreferences
+import com.bitc.plumMarket.R
 import com.bitc.plumMarket.databinding.ActivityChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,6 +32,12 @@ class ChatActivity : AppCompatActivity() {
         val binding = ActivityChatBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)	//툴바 사용 설정
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)	//왼쪽 버튼 사용설정(기본은 뒤로가기)
+
+        supportActionBar!!.setDisplayShowTitleEnabled(true)		//타이틀 보이게 설정
+
 
         messageList = ArrayList()
         val messageAdapter: MessageAdapter = MessageAdapter(this, messageList)
@@ -83,5 +93,25 @@ class ChatActivity : AppCompatActivity() {
 
                 }
             })
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.mainaction, menu)		//작성한 메뉴파일 설정
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item!!.itemId){
+            android.R.id.home->{	//각 버튼 마다 스낵바 메세지로 기능 구현
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_search->{
+
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -7,13 +7,28 @@
     tools:context=".Activity.ChatActivity">
 
 
-<!--    대화 내용-->
+
+    <!--    대화 내용-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/input_layout"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <LinearLayout
         android:id="@+id/input_layout"

@@ -51,7 +51,7 @@ class profilesojoungActivity : AppCompatActivity() {
 
             imageUpload(uri)
 
-            intent = Intent(this, MypageActivity::class.java)
+            intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 

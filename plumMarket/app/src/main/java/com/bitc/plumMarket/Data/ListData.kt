@@ -10,10 +10,11 @@ data class ListData(
     val list_completed_yn: String,
     val list_cate: String,
     val list_loc: String,
-    val list_money: Int
+    val list_money: Int,
+    val list_image_name :String
 
 ){
-    constructor(idx:Int,title: String, money: Int) : this(
+    constructor(idx:Int,title: String, money: Int, image:String) : this(
         list_idx = idx,
         list_title = title,
         list_content = "",
@@ -22,7 +23,8 @@ data class ListData(
         list_completed_yn = "",
         list_cate = "",
         list_loc = "",
-        list_money = money
+        list_money = money,
+        list_image_name = image
     )
 }
 

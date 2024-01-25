@@ -1,60 +1,82 @@
 package com.bitc.plumMarket.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bitc.plumMarket.Adapter.ListSellAdapter
+import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.R
+import com.bitc.plumMarket.RetrofitBuilder
+import com.bitc.plumMarket.databinding.ActivityListRecyclerViewBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SellHideFragment : Fragment(), OnSellCompleteListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SellHideFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SellHideFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var listSellAdapter: ListSellAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_3, container, false)
+        val binding = ActivityListRecyclerViewBinding.inflate(inflater, container, false)
+        val recyclerView: RecyclerView = binding.recyclerViewList
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        listSellAdapter = ListSellAdapter(mutableListOf(), activity as AppCompatActivity, recyclerView, object : OnSellCompleteListener {
+            override fun onSellComplete() {
+                // SellCompleteFragment에서 처리할 작업
+            }
+        })
+
+        recyclerView.adapter = listSellAdapter
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment3.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SellHideFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupSellHideViewData()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        setupSellHideViewData()
+    }
+
+    private fun setupSellHideViewData(){
+        val nick = MySharedpreferences.getUserNick(requireContext())
+        Log.d("nick", nick)
+
+        RetrofitBuilder.api.selectPanmaeHideList(nick).enqueue(object : Callback<List<ListData>> {
+            override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {
+                if (response.isSuccessful) {
+                    val list = response.body()
+                    val items = list.orEmpty().toMutableList()
+
+                    listSellAdapter.setItems(items)
+                } else {
+                    Log.d("ysh", "Failed to fetch data")
                 }
             }
+
+            override fun onFailure(call: Call<List<ListData>>, t: Throwable) {
+                Log.d("error", t.localizedMessage)
+            }
+        })
+    }
+    override fun onSellComplete() {
+        // 여기서 SellOngoingFragment의 데이터를 다시로드하거나 새로 고칩니다.
+        setupSellHideViewData()
     }
 }

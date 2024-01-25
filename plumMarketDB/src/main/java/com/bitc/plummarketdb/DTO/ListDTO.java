@@ -13,4 +13,6 @@ public class ListDTO {
     private String listHitCnt;
     private String listLoc;
     private int listMoney;
+    private String listUpdateDate;
+    private String listImageName;
 }

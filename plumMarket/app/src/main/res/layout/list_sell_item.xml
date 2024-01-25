@@ -34,12 +34,30 @@
           android:layout_marginLeft="10dp"
           android:layout_weight="1" />
 
-      <TextView
-          android:id="@+id/tvListSellMoney"
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_weight="1" />
+          android:orientation="horizontal"
+          android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tvSellReservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FF00"
+            android:text="예약중"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvListSellMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="9" />
+
+      </LinearLayout>
 
     </LinearLayout>
   </LinearLayout>

@@ -19,68 +19,73 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SellOngoingFragment : Fragment(), OnSellCompleteListener {
+
+class SellCompleteFragment : Fragment(), OnSellCompleteListener {
 
     private lateinit var listSellAdapter: ListSellAdapter
-    private lateinit var binding: ActivityListRecyclerViewBinding
-    private lateinit var recyclerView: RecyclerView
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ActivityListRecyclerViewBinding.inflate(inflater, container, false)
-        recyclerView = binding.recyclerViewList
+
+        Log.d("확인", "***** onCreateView *****")
+
+        val binding = ActivityListRecyclerViewBinding.inflate(inflater, container, false)
+        val recyclerView: RecyclerView = binding.recyclerViewList
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-
         listSellAdapter = ListSellAdapter(mutableListOf(), activity as AppCompatActivity, recyclerView, object : OnSellCompleteListener {
             override fun onSellComplete() {
                 // SellCompleteFragment에서 처리할 작업
-                setupRecyclerViewData()
             }
         })
-
         recyclerView.adapter = listSellAdapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerViewData()
+
+        setupSellCompleteViewData()
     }
 
     override fun onResume() {
         super.onResume()
 
-        setupRecyclerViewData()
+        setupSellCompleteViewData()
     }
 
-    private fun setupRecyclerViewData() {
+
+    private fun setupSellCompleteViewData() {
         val nick = MySharedpreferences.getUserNick(requireContext())
 
-        RetrofitBuilder.api.selectPanmaeList(nick).enqueue(object : Callback<List<ListData>> {
-            override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {
-                if (response.isSuccessful) {
-                    val list = response.body()
-                    val items = list.orEmpty().toMutableList()
+        RetrofitBuilder.api.selectPanmaeCompleteList(nick)
+            .enqueue(object : Callback<List<ListData>> {
+                override fun onResponse(
+                    call: Call<List<ListData>>,
+                    response: Response<List<ListData>>
+                ) {
+                    if (response.isSuccessful) {
+                        val list = response.body()
+                        val items = list.orEmpty().toMutableList()
 
-                    listSellAdapter.setItems(items)
-                } else {
-                    Log.d("ysh", "Failed to fetch data")
+                        listSellAdapter.setItems(items)
+                    } else {
+                        Log.d("ysh", "listData is null")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<ListData>>, t: Throwable) {
-                Log.d("error", t.localizedMessage)
-            }
-        })
 
+                override fun onFailure(call: Call<List<ListData>>, t: Throwable) {
+                    Log.d("error", t.localizedMessage)
+                }
+            })
     }
 
     override fun onSellComplete() {
-        // 여기서 SellOngoingFragment의 데이터를 다시로드하거나 새로 고칩니다.
-        setupRecyclerViewData()
+        setupSellCompleteViewData()
     }
-
 }
