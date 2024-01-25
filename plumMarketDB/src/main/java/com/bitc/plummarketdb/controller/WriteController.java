@@ -2,6 +2,7 @@ package com.bitc.plummarketdb.controller;
 
 
 import com.bitc.plummarketdb.DTO.ListDTO;
+import com.bitc.plummarketdb.DTO.ListImageDTO;
 import com.bitc.plummarketdb.service.WriteService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -90,6 +92,18 @@ public class WriteController {
 
         return jsonArray.toString();
     }
+
+    @RequestMapping(value = "/insertImage", method = {RequestMethod.POST})
+    @ResponseBody
+    public void SelectListImage(@RequestBody List<ListImageDTO> list)throws Exception{
+
+
+        for(ListImageDTO item: list){
+            writeService.InsertImageList(item);
+        }
+    }
+
+
 
     @RequestMapping(value = "/selectPanmaeCompleteList", method = {RequestMethod.POST})
     @ResponseBody
