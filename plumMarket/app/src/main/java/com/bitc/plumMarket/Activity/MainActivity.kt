@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)	//왼쪽 버튼 사용설정(기본은 뒤로가기)
 
-        supportActionBar!!.setDisplayShowTitleEnabled(true)		//타이틀 보이게 설정
+        supportActionBar!!.setDisplayShowTitleEnabled(true)			//타이틀 보이게 설정
 
         // Find the NavController
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -46,15 +46,16 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.mainaction, menu)		//작성한 메뉴파일 설정
+        menuInflater.inflate(R.menu.mainaction, menu)      //작성한 메뉴파일 설정
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item!!.itemId){
-            android.R.id.home->{	//각 버튼 마다 스낵바 메세지로 기능 구현
+            android.R.id.home->{   //각 버튼 마다 스낵바 메세지로 기능 구현
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
@@ -62,11 +63,17 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this,SearchActivity::class.java)
                 startActivity(intent)
             }
+            R.id.menu_item_id->{
+                val intent = Intent(this,WriteActivity::class.java)
+                startActivity(intent)
+            }
+
 
         }
 
         return super.onOptionsItemSelected(item)
     }
+
 
 
 }

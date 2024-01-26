@@ -70,6 +70,19 @@ object MySharedpreferences {
         return prefs.getString("MY_NICK", "").toString()
     }
 
+    fun setUserRating(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("MY_RATING", input)
+        editor.commit()
+    }
+
+    fun getUserRating(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("MY_RATING", "").toString()
+    }
+
+
     fun setUserEmail(context: Context, input: String) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()

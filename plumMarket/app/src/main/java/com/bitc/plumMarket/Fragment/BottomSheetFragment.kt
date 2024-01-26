@@ -160,7 +160,7 @@ class BottomSheetFragment(
         }
 
         binding.tvSellEdit.setOnClickListener {
-            dismiss()
+
         }
 
         binding.tvSellHide.setOnClickListener {
