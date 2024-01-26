@@ -24,7 +24,20 @@ public interface WriteService {
     void updateSellHide(ListDTO list)throws Exception;
 
     void updateSellDelete(ListDTO list)throws Exception;
+
     void InsertImageList(ListImageDTO item)throws Exception;
 
+    void updateSellOngoing(ListDTO list) throws Exception;
+
     List<ListDTO> SearchListTitle(String search)throws Exception;
+
+    void updateSellHideRemove(ListDTO list) throws Exception;
+
+    void updateSellupdate(ListDTO list) throws Exception;
+
+    void updateSellRervation(ListDTO list)throws Exception;
+
+    void updateSellRervationDelete(ListDTO list)throws Exception;
+
+    ListDTO selectSellState(ListDTO list)throws Exception;
 }

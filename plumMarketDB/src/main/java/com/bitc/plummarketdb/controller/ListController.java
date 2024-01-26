@@ -51,14 +51,14 @@ public class ListController {
         data.put("userComment",user.getUserComment());
         data.put("listCount",user.getListCount());
 
-       return data.toString();
+        return data.toString();
     }
 
     @PostMapping("/mRating")
     @ResponseBody
     public void minusRating(HttpServletRequest request)throws Exception{
         String nick = request.getParameter("nick");
-       userService.MinusRating(nick);
+        userService.MinusRating(nick);
 
     }
 

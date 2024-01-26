@@ -53,7 +53,10 @@ public class WriteServiceImpl implements WriteService {
     public void updateSellDelete(ListDTO list) throws Exception {
         writeMapper.updateSellDelete(list);
     }
-
+    @Override
+    public void updateSellOngoing(ListDTO list) throws Exception {
+        writeMapper.updateSellOngoing(list);
+    }
     @Override
     public void InsertImageList(ListImageDTO item) throws Exception {
         writeMapper.InsertImageList(item);
@@ -62,5 +65,30 @@ public class WriteServiceImpl implements WriteService {
     @Override
     public List<ListDTO> SearchListTitle(String search) throws Exception {
         return writeMapper.SearchListTitle(search);
+    }
+
+    @Override
+    public void updateSellHideRemove(ListDTO list) throws Exception {
+        writeMapper.updateSellHideRemove(list);
+    }
+
+    @Override
+    public void updateSellupdate(ListDTO list) throws Exception {
+        writeMapper.updateSellupdate(list);
+    }
+
+    @Override
+    public void updateSellRervation(ListDTO list) throws Exception {
+        writeMapper.updateSellRervation(list);
+    }
+
+    @Override
+    public void updateSellRervationDelete(ListDTO list) throws Exception {
+        writeMapper.updateSellRervationDelete(list);
+    }
+
+    @Override
+    public ListDTO selectSellState(ListDTO list) throws Exception {
+        return  writeMapper.selectSellState(list);
     }
 }

@@ -15,4 +15,5 @@ public class ListDTO {
     private int listMoney;
     private String listUpdateDate;
     private String listImageName;
+    private String listSellState;
 }

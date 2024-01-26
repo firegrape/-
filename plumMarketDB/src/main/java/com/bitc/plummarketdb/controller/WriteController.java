@@ -193,6 +193,21 @@ public class WriteController {
         }
     }
 
+    @RequestMapping(value = "/updateSellOngoing", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellOngoing(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellOngoing(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = "/updateSellComplete", method = {RequestMethod.POST})
     @ResponseBody
     public void updateSellComplete(HttpServletRequest request, ListDTO list)throws Exception {
@@ -221,6 +236,82 @@ public class WriteController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/updateSellHideRemove", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellHideRemove(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellHideRemove(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updateSellupdate", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellupdate(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellupdate(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updateSellRervation", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellRervation(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellRervation(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/updateSellRervationDelete", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateSellRervationDelete(HttpServletRequest request, ListDTO list)throws Exception {
+
+        try {
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+            writeService.updateSellRervationDelete(list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "selectSellState", method = {RequestMethod.POST})
+    @ResponseBody
+    public String selectSellState(HttpServletRequest request,ListDTO list) throws Exception {
+
+            String idxString = request.getParameter("idx");
+            int listIdx = Integer.parseInt(idxString);
+            list.setListIdx(listIdx);
+
+            ListDTO listItem = writeService.selectSellState(list);
+
+            JSONObject data = new JSONObject();
+            data.put("list_sell_state", listItem.getListSellState());
+
+            return data.toString();
     }
 
     @RequestMapping(value = "/updateSellDelete", method = {RequestMethod.POST})

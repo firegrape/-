@@ -43,9 +43,9 @@
         22
         ) AS list_image_name
         FROM
-        list AS a
+            list AS a
         ORDER BY
-        list_idx DESC
+            list_update_date DESC
     </select>
 
     <select id="PanmaeSelectList" parameterType="String" resultType="com.bitc.plummarketdb.DTO.ListDTO">
@@ -59,10 +59,12 @@
             list_cate = 0
         AND
             list_sell_state = 0
+        OR
+            list_sell_state = 3
         AND
             list_completed_yn = 'N'
         ORDER BY
-            list_idx
+            list_update_date
         DESC;
     </select>
 
@@ -132,6 +134,62 @@
             list_idx = #{listIdx}
     </update>
 
+    <update id="updateSellOngoing" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_sell_state = 0,
+            list_update_date = NOW()
+        WHERE
+            list_idx = #{listIdx}
+    </update>
+
+    <update id="updateSellHideRemove" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_sell_state = 0,
+            list_update_date = NOW()
+        WHERE
+            list_idx = #{listIdx}
+    </update>
+
+    <update id="updateSellupdate" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_update_date = NOW()
+        WHERE
+            list_idx = #{listIdx}
+    </update>
+
+    <update id="updateSellRervation" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_sell_state = 3
+        WHERE
+        list_idx = #{listIdx}
+    </update>
+
+    <update id="updateSellRervationDelete" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
+        UPDATE
+            list
+        SET
+            list_sell_state = 0
+        WHERE
+            list_idx = #{listIdx}
+    </update>
+
+    <select id="selectSellState" parameterType="com.bitc.plummarketdb.DTO.ListDTO" resultType="com.bitc.plummarketdb.DTO.ListDTO">
+        SELECT
+            list_sell_state
+        FROM
+            list
+        WHERE
+            list_idx = #{listIdx}
+    </select>
+
     <update id="updateSellDelete" parameterType="com.bitc.plummarketdb.DTO.ListDTO">
         UPDATE
             list
@@ -140,5 +198,7 @@
         WHERE
             list_idx = #{listIdx}
     </update>
+
+
 
 </mapper>
