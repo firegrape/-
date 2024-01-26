@@ -32,13 +32,13 @@ class YouProfileActivity : AppCompatActivity() {
         val binding = ActivityYouProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)	//툴바 사용 설정
+        setSupportActionBar(binding.toolbar)   //툴바 사용 설정
 
         val nickname = "테스터"
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)	//왼쪽 버튼 사용설정(기본은 뒤로가기)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)   //왼쪽 버튼 사용설정(기본은 뒤로가기)
 
-        supportActionBar!!.setDisplayShowTitleEnabled(true)		//타이틀 보이게 설정
+        supportActionBar!!.setDisplayShowTitleEnabled(true)      //타이틀 보이게 설정
 
         RetrofitBuilder.api.userInfo(nickname).enqueue(object: Callback<UserDTO> {
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
@@ -55,6 +55,39 @@ class YouProfileActivity : AppCompatActivity() {
                     binding.comment.text = comment
                     binding.gaugeLabel.text = rating
                     binding.listCount.text = "${list}개"
+                    val barChart = binding.chart2
+                    binding.chart2.setTouchEnabled(false)
+
+
+
+
+                    val entries = mutableListOf<BarEntry>()
+                    entries.add(BarEntry(0f, rating.toFloat()))
+
+                    val dataSet = BarDataSet(entries, "매너온도")
+                    dataSet.color = Color.GREEN
+
+                    val barData = BarData(dataSet)
+                    barData.barWidth = 0.5.toFloat()
+
+                    barChart.data = barData
+                    barChart.setFitBars(true)
+                    barChart.description.isEnabled = false
+                    barChart.legend.isEnabled = false
+
+                    val xAxis: XAxis = barChart.xAxis
+                    xAxis.isEnabled = false
+
+                    val leftAxis: YAxis = barChart.axisLeft
+                    leftAxis.axisMinimum = 0f
+                    leftAxis.axisMaximum = 100f
+                    leftAxis.setDrawAxisLine(false)
+                    leftAxis.setDrawGridLines(false)
+
+                    val rightAxis: YAxis = barChart.axisRight
+                    rightAxis.isEnabled = false
+
+                    barChart.invalidate()
 
 
                 }
@@ -68,39 +101,7 @@ class YouProfileActivity : AppCompatActivity() {
             }
         })
 
-        val barChart = binding.chart2
-        binding.chart2.setTouchEnabled(false)
 
-        val rating = MySharedpreferences.getUserRating(this)
-
-
-        val entries = mutableListOf<BarEntry>()
-        entries.add(BarEntry(0f, rating.toFloat()))
-
-        val dataSet = BarDataSet(entries, "매너온도")
-        dataSet.color = Color.GREEN
-
-        val barData = BarData(dataSet)
-        barData.barWidth = 0.5.toFloat()
-
-        barChart.data = barData
-        barChart.setFitBars(true)
-        barChart.description.isEnabled = false
-        barChart.legend.isEnabled = false
-
-        val xAxis: XAxis = barChart.xAxis
-        xAxis.isEnabled = false
-
-        val leftAxis: YAxis = barChart.axisLeft
-        leftAxis.axisMinimum = 0f
-        leftAxis.axisMaximum = 100f
-        leftAxis.setDrawAxisLine(false)
-        leftAxis.setDrawGridLines(false)
-
-        val rightAxis: YAxis = barChart.axisRight
-        rightAxis.isEnabled = false
-
-        barChart.invalidate()
 
 
         binding.btnMan.setOnClickListener{
@@ -146,14 +147,14 @@ class YouProfileActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.mainaction, menu)		//작성한 메뉴파일 설정
+        menuInflater.inflate(R.menu.mainaction, menu)      //작성한 메뉴파일 설정
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item!!.itemId){
-            android.R.id.home->{	//각 버튼 마다 스낵바 메세지로 기능 구현
+            android.R.id.home->{   //각 버튼 마다 스낵바 메세지로 기능 구현
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
