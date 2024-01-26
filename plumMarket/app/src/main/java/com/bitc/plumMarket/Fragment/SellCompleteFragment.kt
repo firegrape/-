@@ -31,8 +31,6 @@ class SellCompleteFragment : Fragment(), OnSellCompleteListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("확인", "***** onCreateView *****")
-
         val binding = ActivityListRecyclerViewBinding.inflate(inflater, container, false)
         val recyclerView: RecyclerView = binding.recyclerViewList
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -40,8 +38,9 @@ class SellCompleteFragment : Fragment(), OnSellCompleteListener {
         listSellAdapter = ListSellAdapter(mutableListOf(), activity as AppCompatActivity, recyclerView, object : OnSellCompleteListener {
             override fun onSellComplete() {
                 // SellCompleteFragment에서 처리할 작업
+                setupSellCompleteViewData()
             }
-        })
+        },MySharedpreferences.getPosition(requireContext()))
         recyclerView.adapter = listSellAdapter
         return binding.root
     }

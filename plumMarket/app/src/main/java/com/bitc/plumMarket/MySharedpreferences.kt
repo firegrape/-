@@ -21,6 +21,8 @@ object MySharedpreferences {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         return prefs.getString("MY_IDX", "").toString()
     }
+
+
     fun setListIdx(context: Context, input: String) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()
@@ -80,30 +82,17 @@ object MySharedpreferences {
         return prefs.getString("MY_EMAIL", "").toString()
     }
 
-    fun setUserPass(context: Context, input: String) {
+    fun setPosition(context: Context, input: String) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()
-        editor.putString("MY_PASS", input)
+        editor.putString("Position", input)
         editor.commit()
     }
 
-    fun getUserPass(context: Context): String {
+    fun getPosition(context: Context): String {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
-        return prefs.getString("MY_PASS", "").toString()
+        return prefs.getString("Position", "").toString()
     }
-
-    fun setUserRating(context: Context, input: String) {
-        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
-        val editor : SharedPreferences.Editor = prefs.edit()
-        editor.putString("MY_RATING", input)
-        editor.commit()
-    }
-
-    fun getUserRating(context: Context): String {
-        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
-        return prefs.getString("MY_RATING", "").toString()
-    }
-
     fun setFileUrl(context: Context, input: String) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()

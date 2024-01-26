@@ -37,22 +37,20 @@ class ProfileActivity : AppCompatActivity() {
         val storageReference = storage.getReference("image")
         Log.d("image33",fileName)
 
-        if (fileName != null && fileName != "noImage" && fileName != "null" && fileName.isNotBlank()) {
-            // 조건이 충족되는 경우의 처리 로직
+        if (fileName.equals("null")) {
+            Log.d("image", "데이터 없음")
+
+
+        } else {
             val pathReference = storageReference.child(fileName)
             pathReference.downloadUrl.addOnSuccessListener { uri ->
                 Glide.with(this).load(uri).into(binding.ivUser);
             }.addOnFailureListener {
-                Log.d("image", "가져오기 실패")
+                Log.d("image1", "가져오기 실패")
             }
 
-        } else {
 
-            Log.d("image", "데이터 없음")
         }
-
-
-
 //       뒤로 가기 버튼
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

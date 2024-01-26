@@ -44,7 +44,6 @@ class profilesojoungActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
 //      완료 버튼 클릭스 프로필 페이지로 이동 버튼
         binding.btnMypageProfile.setOnClickListener {
 

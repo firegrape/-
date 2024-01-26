@@ -39,7 +39,7 @@ class SellOngoingFragment : Fragment(), OnSellCompleteListener {
                 // SellCompleteFragment에서 처리할 작업
                 setupRecyclerViewData()
             }
-        })
+        },MySharedpreferences.getPosition(requireContext()))
 
         recyclerView.adapter = listSellAdapter
         return binding.root

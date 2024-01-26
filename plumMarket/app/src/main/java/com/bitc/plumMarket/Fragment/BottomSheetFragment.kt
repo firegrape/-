@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -23,6 +25,8 @@ class BottomSheetFragment(
 
     private lateinit var binding: FragmentBottomSheetBinding
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,9 +37,109 @@ class BottomSheetFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val postion = MySharedpreferences.getPosition(requireContext())
+        val res = binding.tvSellReservation
+        val comp = binding.tvSellComplete
+        val hide = binding.tvSellHide
+        val sell = binding.tvSellOngoing
+
+        fun sellStateCheck(idx: String, callback: (String) -> Unit) {
+            RetrofitBuilder.api.selectSellState(idx).enqueue(object : Callback<ListData> {
+                override fun onResponse(call: Call<ListData>, response: Response<ListData>) {
+                    if (response.isSuccessful) {
+                        val sellState = response.body()?.list_sell_state.toString()
+                        callback(sellState)
+                    } else {
+                        // 실패 시에 대한 처리
+                        Log.e("sellStateCheck", "요청 실패: ${response.code()}")
+                        callback("")
+                    }
+                }
+
+                override fun onFailure(call: Call<ListData>, t: Throwable) {
+                    Log.e("sellStateCheck", "에러 발생: ${t.localizedMessage}")
+                    callback("")
+                }
+            })
+        }
+
+        when(postion){
+            "0" -> {
+                sellStateCheck(idx) { sellState ->
+                    Log.d("sellState", "${sellState}뷁")
+                    when (sellState) {
+                        "3" -> {
+                            res.visibility = View.GONE
+                            sell.visibility = View.VISIBLE
+                        }
+                        else -> {
+                            res.visibility = View.VISIBLE
+                            comp.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+            "1" -> {
+                sell.visibility = View.VISIBLE
+            }
+            "2" -> {
+                hide.visibility = View.GONE
+            }
+        }
+
+
+
+
+
+        binding.tvSellOngoing.setOnClickListener{
+            RetrofitBuilder.api.updateSellOngoing(idx).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        tvSellReservation.visibility = View.GONE
+                        dismiss()
+                        // SellOngoingFragment 리로딩을 위해 콜백 호출
+                        sellCompleteListener.onSellComplete()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("error", t.localizedMessage)
+                }
+            })
+        }
 
         binding.tvSellReservation.setOnClickListener {
-            tvSellReservation.visibility = View.VISIBLE
+
+            if(tvSellReservation.visibility == View.GONE){
+                RetrofitBuilder.api.updateSellRervation(idx).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            tvSellReservation.visibility = View.VISIBLE
+                            dismiss()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Log.d("error", t.localizedMessage)
+                    }
+                })
+            }
+            else{
+                RetrofitBuilder.api.updateSellRervationDelete(idx).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            tvSellReservation.visibility = View.GONE
+                            dismiss()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Log.d("error", t.localizedMessage)
+                    }
+                })
+            }
+
+
             dismiss()
         }
 
@@ -43,7 +147,6 @@ class BottomSheetFragment(
             RetrofitBuilder.api.updateSellComplete(idx).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "거래가 완료되었습니다", Toast.LENGTH_SHORT).show()
                         dismiss()
                         // SellOngoingFragment 리로딩을 위해 콜백 호출
                         sellCompleteListener.onSellComplete()
@@ -64,7 +167,6 @@ class BottomSheetFragment(
             RetrofitBuilder.api.updateSellHide(idx).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "목록이 숨겨졌습니다", Toast.LENGTH_SHORT).show()
                         dismiss()
                         sellCompleteListener.onSellComplete()
                     }
@@ -91,4 +193,7 @@ class BottomSheetFragment(
             })
         }
     }
+
+
+
 }

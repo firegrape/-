@@ -27,4 +27,6 @@ class ViewPager2Adapter(panmaeActivity: PanmaeActivity) : FragmentStateAdapter(p
         //TODO: notifyItemRemoved!!
     }
 
+
+
 }

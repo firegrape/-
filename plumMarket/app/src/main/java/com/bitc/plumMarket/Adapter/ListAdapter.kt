@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bitc.plumMarket.Activity.SangsePageActivity
@@ -31,9 +32,25 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
 
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val bind = (holder as ListViewHolder).binding
+    val idx = items[position].list_idx.toString()
     bind.tvListIdx.text = items[position].list_idx.toString()
     bind.tvListTitle.text = items[position].list_title
     bind.tvListMoney.text = items[position].list_money.toString() + "원"
+
+    RetrofitBuilder.api.selectSellState(idx).enqueue(object : Callback<ListData> {
+      override fun onResponse(call: Call<ListData>, response: Response<ListData>) {
+        if (response.isSuccessful) {
+          val sellState = response.body()?.list_sell_state.toString()
+          if(sellState == "3"){
+            bind.tvReservation.visibility = View.VISIBLE
+          }
+        }
+      }
+
+      override fun onFailure(call: Call<ListData>, t: Throwable) {
+        Log.d("error", t.localizedMessage)
+      }
+    })
 
     val fileName = items[position].list_image_name
 
@@ -62,30 +79,7 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
       // SangsePageActivity로 이동하면서 선택된 아이템의 list_idx 값을 전달
       val intent = Intent(holder.itemView.context, SangsePageActivity::class.java)
       intent.putExtra("selected_idx", selectedIdx)
-
-      RetrofitBuilder.api.CountHint(selectedIdx.toString()).enqueue(object: Callback<Void> {
-        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-
-
-        }
-
-        override fun onFailure(call: Call<Void>, t: Throwable) {
-          Log.d("error", t.localizedMessage)
-
-
-        }
-      })
       holder.itemView.context.startActivity(intent)
     }
   }
 }
-
-
-
-
-
-
-
-
-
-

@@ -13,72 +13,60 @@
         android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/mainLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@drawable/house"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- 상단의 ConstraintLayout -->
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <!-- 뒤로가기 버튼 -->
                 <ImageView
                     android:id="@+id/btn_back"
-                    android:layout_width="70dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.003"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!-- 홈 버튼 -->
-
-                <!-- 점점점 아이콘 -->
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
                     android:id="@+id/btn_home"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/home"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/btn_back"
+                    app:layout_constraintHorizontal_bias="0.172"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
                     android:id="@+id/jumjumjum"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
+                    android:layout_width="43dp"
+                    android:layout_height="31dp"
                     android:src="@drawable/qqqqq"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.986"
-                    app:layout_constraintStart_toEndOf="@id/btn_home"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHorizontal_bias="0.991"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.102" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!-- RecyclerView -->
-
-            <!-- ImageView -->
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/viewPager2"
-                android:padding="16dp" />
-
-
         </LinearLayout>
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,6 +161,8 @@
                     android:text=" 조회 " />
             </LinearLayout>
         </LinearLayout>
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

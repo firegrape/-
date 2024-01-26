@@ -22,8 +22,8 @@ class MypageActivity : AppCompatActivity() {
         val storageReference = storage.getReference("image")
 
 
-        if (fileName != null && fileName != "noImage" && fileName != "null" && fileName.isNotBlank()) {
-            // 조건이 충족되는 경우의 처리 로직
+        if (fileName != null) {
+
             val pathReference = storageReference.child(fileName)
             pathReference.downloadUrl.addOnSuccessListener { uri ->
                 Glide.with(this).load(uri).into(binding.profilePicture);

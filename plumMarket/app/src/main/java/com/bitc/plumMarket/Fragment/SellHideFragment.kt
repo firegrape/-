@@ -35,8 +35,9 @@ class SellHideFragment : Fragment(), OnSellCompleteListener {
         listSellAdapter = ListSellAdapter(mutableListOf(), activity as AppCompatActivity, recyclerView, object : OnSellCompleteListener {
             override fun onSellComplete() {
                 // SellCompleteFragment에서 처리할 작업
+                setupSellHideViewData()
             }
-        })
+        },MySharedpreferences.getPosition(requireContext()))
 
         recyclerView.adapter = listSellAdapter
         return binding.root
@@ -54,7 +55,7 @@ class SellHideFragment : Fragment(), OnSellCompleteListener {
         setupSellHideViewData()
     }
 
-    private fun setupSellHideViewData(){
+    fun setupSellHideViewData(){
         val nick = MySharedpreferences.getUserNick(requireContext())
         Log.d("nick", nick)
 
@@ -79,4 +80,6 @@ class SellHideFragment : Fragment(), OnSellCompleteListener {
         // 여기서 SellOngoingFragment의 데이터를 다시로드하거나 새로 고칩니다.
         setupSellHideViewData()
     }
+
+
 }
