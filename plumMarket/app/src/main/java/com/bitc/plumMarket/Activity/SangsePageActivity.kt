@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.bitc.plumMarket.Adapter.SlideAdapter
 import com.bitc.plumMarket.Adapter.imageAdapter
 import com.bitc.plumMarket.Data.ListData
-import com.bitc.plumMarket.Fragment.ImageFragment1
-import com.bitc.plumMarket.Fragment.ImageFragment2
-import com.bitc.plumMarket.Fragment.ImageFragment3
-import com.bitc.plumMarket.R
 import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.databinding.ActivitySangsePageBinding
 import retrofit2.Call
@@ -19,69 +17,92 @@ import retrofit2.Response
 
 class SangsePageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val binding = ActivitySangsePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        binding.imageView.setImageResource(R.drawable.cat05)
+        var idx= intent.getIntExtra("selected_idx", -1).toString()
 
+
+
+
+
+
+
+
+
+        val imageUriList = mutableListOf<String>()
+     Log.d("tyttt", "${imageUriList}")
 //    뷰 페이저2에 사용할 프래그먼트 리스트 생성
-        val fragmentList = listOf<Fragment>(ImageFragment1(), ImageFragment2(), ImageFragment3())
-//    뷰 페이저2 어뎁터 객체 생성
-        val imageAdapter = imageAdapter(this)
+
 
         //    뷰 페이저2 어뎁터에 사용할 프래그먼트 리스트 등록
-        imageAdapter.fragmentList = fragmentList
-//    뷰 페이저2 에 어뎁터 등록
-        binding.viewPager2.adapter = imageAdapter
 
 
-
-
-        val idx = intent.getStringExtra("selected_idx").toString()
-        Log.d("idx",idx)
-
-
-        RetrofitBuilder.api.getListData(idx).enqueue(object : Callback<ListData> {
-            override fun onResponse(call: Call<ListData>, response: Response<ListData>) {
+        RetrofitBuilder.api.DetailSelect(idx).enqueue(object : Callback<List<ListData>> {
+            override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {
                 if (response.isSuccessful) {
-                    val title = response.body()?.list_title.toString()
-                    val content = response.body()?.list_content.toString()
-                    val money = response.body()?.list_money.toString()
-                    val nick = response.body()?.list_user_nick.toString()
+                    val list = response.body()
+                    val items = mutableListOf<ListData>()
 
-                    binding.TvTitle.text = title
-                    binding.tvcontent.text = content
-                    binding.tvMoney.text = money
-                    Log.d("money",money)
-                    binding.tvUserId.text = nick
+                    if (list != null) {
+                        // listData를 활용하여 필요한 처리를 수행해주세요
+                        // 예시: listData를 순회하며 각 객체의 필드를 읽어옴
+                        for (data in list) {
+                            val idx = data.list_idx
+                            val title = data.list_title
+                            val money = data.list_money
+                            val loc = data.list_loc
+                            val content = data.list_content
+                            val nick = data.list_user_nick
+                            val image = data.list_image_name
 
-                    binding.ivUser.setImageResource(R.drawable.cat05)
-                    binding.ivUser.setImageResource(R.drawable.back)
-                    binding.ivUser.setImageResource(R.drawable.allream)
+                            binding.TvTitle.text = title.toString()
+                            binding.tvcontent.text = content.toString()
+                            binding.tvMoney.text = money.toString()
+                            binding.tvUserId.text = nick.toString()
 
+                            // 이미지 변수를 imageUriList에 추가
+                            imageUriList.add(image)
+                        }
+
+                        // 이미지 추가 후 뷰페이저 어댑터에 전달
+                        val viewPager = binding.viewPagerSlide
+                        viewPager.adapter = SlideAdapter(this@SangsePageActivity, imageUriList)
+                        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    } else {
+                        Log.d("ysh", "listData is null")
+                    }
                 } else {
                     Log.d("ysh", "Server response unsuccessful. Code: ${response.code()}")
                 }
             }
 
-            override fun onFailure(call: Call<ListData>, t: Throwable) {
+            override fun onFailure(call: Call<List<ListData>>, t: Throwable) {
                 Log.e("error", "Network request failed", t)
             }
         })
 
 
+        val viewPager = binding.viewPagerSlide
+        viewPager.adapter = SlideAdapter(this, imageUriList)
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+
+
+
         binding.btnBack.setOnClickListener {
-            intent = Intent(this, MainActivity2::class.java)
+            intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnHome.setOnClickListener {
-            intent = Intent(this, MainActivity2::class.java)
+            intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnChatting.setOnClickListener {
-            intent = Intent(this, MainActivity2::class.java)
+            intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 

@@ -46,7 +46,7 @@ class DongneaActivity : AppCompatActivity() {
         })
 
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity2::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

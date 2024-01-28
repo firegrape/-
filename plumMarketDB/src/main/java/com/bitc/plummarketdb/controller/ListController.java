@@ -7,9 +7,12 @@ import com.bitc.plummarketdb.service.ListService;
 import com.bitc.plummarketdb.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ListController {
@@ -67,6 +70,51 @@ public class ListController {
     public void PlusRating(HttpServletRequest request)throws Exception{
         String nick = request.getParameter("nick");
         userService.PlusRating(nick);
+
+    }
+
+    @PostMapping("/DetailPageInfo")
+    @ResponseBody
+    public String DetailPageInfo(HttpServletRequest request)throws Exception{
+        String listIdx = request.getParameter("list_idx");
+
+        List<ListDTO> DetailList = listService.DetailPageInfo(listIdx);
+
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO item : DetailList){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", item.getListIdx());
+            data.put("list_title", item.getListTitle());
+            data.put("list_create_date", item.getListCreateDate());
+            data.put("list_content", item.getListContent());
+            data.put("list_user_nick", item.getListUserNick());
+            data.put("list_money", item.getListMoney());
+            data.put("list_loc", item.getListLoc());
+            data.put("list_hit_cnt", item.getListHitCnt());
+            data.put("list_image_name", item.getListImageName());
+            jsonArray.put(data);
+
+        }
+        if(jsonArray.isNull(0)){
+            ListDTO noImageDetail = listService.NoImageDetail(listIdx);
+            JSONObject data1 = new JSONObject();
+            data1.put("list_idx", noImageDetail.getListIdx());
+            data1.put("list_title", noImageDetail.getListTitle());
+            data1.put("list_create_date", noImageDetail.getListCreateDate());
+            data1.put("list_content", noImageDetail.getListContent());
+            data1.put("list_user_nick", noImageDetail.getListUserNick());
+            data1.put("list_money", noImageDetail.getListMoney());
+            data1.put("list_loc", noImageDetail.getListLoc());
+            data1.put("list_hit_cnt", noImageDetail.getListHitCnt());
+            JSONArray jsonArray1 = new JSONArray();
+
+            jsonArray1.put(data1);
+            return  jsonArray1.toString();
+        }else {
+
+
+            return jsonArray.toString();
+        }
 
     }
 

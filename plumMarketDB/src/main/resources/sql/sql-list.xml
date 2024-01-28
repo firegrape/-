@@ -3,6 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bitc.plummarketdb.mapper.ListImageMapper">
+<mapper namespace="com.bitc.plummarketdb.mapper.ListMapper">
+
+    <select id="DetailPageInfo" parameterType="String" resultType="com.bitc.plummarketdb.DTO.ListDTO">
+
+    select l.list_idx, l.list_title, l.list_content,  l.list_create_date, l.list_loc, l.list_money, l.list_hit_cnt , l.list_user_nick, i.list_image_name from
+    list as l join list_image as i
+    on l.list_idx = i.list_image_list_idx
+    where l.list_idx = #{listIdx}
+    and l.list_completed_yn = 'N'
+
+    </select>
+
+    <select id="NoImageDetail" parameterType="String" resultType="com.bitc.plummarketdb.DTO.ListDTO">
+
+        select * from list where list_idx = ${listIdx}
+    </select>
 
 </mapper>

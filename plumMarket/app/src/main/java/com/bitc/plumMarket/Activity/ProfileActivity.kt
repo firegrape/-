@@ -20,37 +20,36 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)	//툴바 사용 설정
+        setSupportActionBar(binding.toolbar)    //툴바 사용 설정
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)	//왼쪽 버튼 사용설정(기본은 뒤로가기)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)    //왼쪽 버튼 사용설정(기본은 뒤로가기)
 
-        supportActionBar!!.setDisplayShowTitleEnabled(true)		//타이틀 보이게 설정
+        supportActionBar!!.setDisplayShowTitleEnabled(true)        //타이틀 보이게 설정
 
         val fileName = MySharedpreferences.getFileUrl(this)
 
         binding.tvUserId.text = MySharedpreferences.getUserNick(applicationContext)
 
 
-
-
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.getReference("image")
-        Log.d("image33",fileName)
 
-        if (fileName.equals("null")) {
-            Log.d("image", "데이터 없음")
-
-
-        } else {
+        if (fileName != null && fileName != "noImage" && fileName != "null" && fileName.isNotBlank()) {
+            // 조건이 충족되는 경우의 처리 로직
             val pathReference = storageReference.child(fileName)
             pathReference.downloadUrl.addOnSuccessListener { uri ->
                 Glide.with(this).load(uri).into(binding.ivUser);
             }.addOnFailureListener {
-                Log.d("image1", "가져오기 실패")
+                Log.d("image", "가져오기 실패")
             }
 
+        } else {
 
+            Log.d("image", "데이터 없음")
         }
+
+
+
 //       뒤로 가기 버튼
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

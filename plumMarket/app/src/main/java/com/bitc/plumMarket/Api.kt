@@ -196,6 +196,10 @@ interface Api {
     @POST("/pRating")
     fun PlusRating(@Field("nick") nick:String):Call<Void>
 
+
+    @FormUrlEncoded
+    @POST("/DetailPageInfo")
+    fun DetailSelect(@Field("list_idx")idx: String):Call<List<ListData>>
 }
 
 

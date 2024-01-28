@@ -67,11 +67,10 @@
 
             <!-- ImageView -->
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/viewPager2"
-                android:padding="16dp" />
+          <androidx.viewpager2.widget.ViewPager2
+               android:id="@+id/viewPagerSlide"
+              android:layout_width="match_parent"
+                android:layout_height="200dp"/>
 
 
         </LinearLayout>

@@ -61,7 +61,7 @@ class AlleramActivity : AppCompatActivity() {
 
         // 뒤로가기 버튼 사용 마이페이지 이동
         binding.btnBack.setOnClickListener {
-            intent = Intent(this, MainActivity2::class.java)
+            intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

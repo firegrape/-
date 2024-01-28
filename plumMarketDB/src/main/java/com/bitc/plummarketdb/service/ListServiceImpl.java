@@ -6,6 +6,8 @@ import com.bitc.plummarketdb.mapper.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ListServiceImpl implements ListService {
     @Autowired
@@ -18,5 +20,16 @@ public class ListServiceImpl implements ListService {
     @Override
     public void updateHit(String idx) throws Exception {
         listMapper.updateHit(idx);
+    }
+
+    @Override
+    public List<ListDTO> DetailPageInfo(String listIdx) throws Exception {
+        return listMapper.DetailPageInfo(listIdx);
+
+    }
+
+    @Override
+    public ListDTO NoImageDetail(String listIdx) throws Exception {
+        return listMapper.NoImageDetail(listIdx);
     }
 }
