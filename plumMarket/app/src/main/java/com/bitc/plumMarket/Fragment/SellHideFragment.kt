@@ -57,7 +57,7 @@ class SellHideFragment : Fragment(), OnSellCompleteListener {
 
     fun setupSellHideViewData(){
         val nick = MySharedpreferences.getUserNick(requireContext())
-        Log.d("nick", nick)
+
 
         RetrofitBuilder.api.selectPanmaeHideList(nick).enqueue(object : Callback<List<ListData>> {
             override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {

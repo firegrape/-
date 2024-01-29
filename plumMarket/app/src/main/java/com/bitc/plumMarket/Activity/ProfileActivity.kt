@@ -26,10 +26,10 @@ class ProfileActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayShowTitleEnabled(true)        //타이틀 보이게 설정
 
-        val fileName = MySharedpreferences.getFileUrl(this)
 
         binding.tvUserId.text = MySharedpreferences.getUserNick(applicationContext)
 
+        val fileName = MySharedpreferences.getFileUrl(this)
 
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.getReference("image")

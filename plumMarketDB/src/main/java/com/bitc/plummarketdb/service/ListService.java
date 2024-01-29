@@ -14,4 +14,6 @@ public interface ListService {
     List<ListDTO> DetailPageInfo(String listIdx)throws Exception;
 
     ListDTO NoImageDetail(String listIdx)throws Exception;
+
+    void UpdateBuy(String nick, String idx)throws Exception;
 }

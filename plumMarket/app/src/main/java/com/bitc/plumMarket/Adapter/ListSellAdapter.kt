@@ -47,6 +47,7 @@
       bind.tvListSellIdx.text = items[position].list_idx.toString()
       bind.tvListSellTitle.text = items[position].list_title
       bind.tvListSellMoney.text = "${items[position].list_money}원"
+      bind.tvSellReservation.visibility = View.GONE
 
       RetrofitBuilder.api.selectSellState(idx).enqueue(object : Callback<ListData> {
         override fun onResponse(call: Call<ListData>, response: Response<ListData>) {

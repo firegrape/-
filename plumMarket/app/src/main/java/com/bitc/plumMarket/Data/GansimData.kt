@@ -1,10 +1,12 @@
 package com.bitc.plumMarket.Data
 
-import com.google.gson.annotations.SerializedName
 
 data class GansimData(
 
-    var fav_list_idx : Int,
-   var favTitle: String,
-    var fav_money: Int
-    )
+    val fav_list_idx: Int,
+    val fav_title: String,
+    val fav_money: String,
+    val fav_image: String,
+    val fav_sell_state: String
+
+)

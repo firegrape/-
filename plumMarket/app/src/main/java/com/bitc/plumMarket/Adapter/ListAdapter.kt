@@ -9,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bitc.plumMarket.Activity.MainActivity
 import com.bitc.plumMarket.Activity.SangsePageActivity
 import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.Data.LoginData
+import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.ViewHolder.ListViewHolder
 import com.bitc.plumMarket.databinding.ListItemBinding
@@ -36,6 +39,7 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
     bind.tvListIdx.text = items[position].list_idx.toString()
     bind.tvListTitle.text = items[position].list_title
     bind.tvListMoney.text = items[position].list_money.toString() + "원"
+    bind.tvReservation.visibility = View.GONE
 
     RetrofitBuilder.api.selectSellState(idx).enqueue(object : Callback<ListData> {
       override fun onResponse(call: Call<ListData>, response: Response<ListData>) {
@@ -76,8 +80,22 @@ class ListAdapter(val items: MutableList<ListData>): RecyclerView.Adapter<Recycl
     bind.tvListTitle.setOnClickListener() {
       val selectedIdx = items[position].list_idx
 
+      RetrofitBuilder.api.CountHint(selectedIdx.toString()).enqueue(object: Callback<Void>{
+        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+            Log.d("hint", "조회수증가")
+        }
+        override fun onFailure(call: Call<Void>, t: Throwable) {
+          Log.d("error", t.localizedMessage)
+        }
+      })
+
       // SangsePageActivity로 이동하면서 선택된 아이템의 list_idx 값을 전달
       val intent = Intent(holder.itemView.context, SangsePageActivity::class.java)
+
+
+
+
+
       intent.putExtra("selected_idx", selectedIdx)
       holder.itemView.context.startActivity(intent)
     }

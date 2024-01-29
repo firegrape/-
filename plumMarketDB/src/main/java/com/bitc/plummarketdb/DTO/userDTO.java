@@ -1,6 +1,7 @@
 package com.bitc.plummarketdb.DTO;
 
 import lombok.Data;
+import org.apache.ibatis.annotations.Param;
 
 @Data
 public class userDTO {
@@ -16,6 +17,7 @@ public class userDTO {
     private int userRating;
     private int sendIdx;
     private int receiveIdx;
+    private int  listUid;
     private String userProfile;
     private String userComment;
     private String listCount;

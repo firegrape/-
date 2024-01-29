@@ -104,26 +104,26 @@ class WriteActivity : AppCompatActivity() {
 
 
             RetrofitBuilder.api.insertListData(title,money,content,loc,nick).enqueue(object : Callback<Int> {
-                override fun onResponse(
-                    call: Call<Int>,
-                    response: Response<Int>
-                ) {
-                    if (response.isSuccessful) {
-                        var result = response.body()
-                        MySharedpreferences.setListIdx(this@WriteActivity,result.toString())
-                        Toast.makeText(this@WriteActivity,"등록되었습니다.",Toast.LENGTH_SHORT).show()
+            override fun onResponse(
+                call: Call<Int>,
+                response: Response<Int>
+            ) {
+                if (response.isSuccessful) {
+                    var result = response.body()
+                    MySharedpreferences.setListIdx(this@WriteActivity,result.toString())
+                    Toast.makeText(this@WriteActivity,"등록되었습니다.",Toast.LENGTH_SHORT).show()
 
-                    } else {
-                        Log.d("ysh", "listData is null")
-                    }
+                } else {
+                    Log.d("ysh", "listData is null")
                 }
+            }
 
-                override fun onFailure(call: Call<Int>, t: Throwable) {
-                    Log.d("error", t.localizedMessage)
-                }
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                Log.d("error", t.localizedMessage)
+            }
 
 
-            })
+        })
             if(!uris.equals("null") or !uris.equals(null)) {
                 imageUpload(uris)
             }else{
@@ -135,7 +135,7 @@ class WriteActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            val intent = Intent(this, SangsePageActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
@@ -214,7 +214,6 @@ class WriteActivity : AppCompatActivity() {
             val uploadTask  = mountainsRef.putFile(item)
             uploadTask.addOnSuccessListener { taskSnapshot ->
                 // 파일 업로드 성공
-                Toast.makeText(this@WriteActivity, "프로필 업로드 성공", Toast.LENGTH_SHORT).show();
 
 
                 val idx = MySharedpreferences.getListIdx(this)
@@ -226,7 +225,6 @@ class WriteActivity : AppCompatActivity() {
 
 
 
-                Toast.makeText(this@WriteActivity, "${list}", Toast.LENGTH_SHORT).show();
 
 
 
@@ -247,7 +245,6 @@ class WriteActivity : AppCompatActivity() {
 
             }.addOnFailureListener {
                 // 파일 업로드 실패
-                Toast.makeText(this@WriteActivity, "프로필 업로드 실패", Toast.LENGTH_SHORT).show();
             }
         }
 

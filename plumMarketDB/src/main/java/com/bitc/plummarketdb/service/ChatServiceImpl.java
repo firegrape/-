@@ -22,4 +22,21 @@ public class ChatServiceImpl implements ChatService {
     public void deleteChatList(userDTO user) throws Exception {
         chatMapper.deleteChatList(user);
     }
+
+    @Override
+    public void EnterChat(String sendIdx, String receiveIdx, String listUid) throws Exception {
+        chatMapper.EnterChat(sendIdx,receiveIdx,listUid);
+    }
+
+    @Override
+    public int CheckChat(String sendIdx, String receiveIdx, String listUid) throws Exception {
+        return chatMapper.CheckChat(sendIdx,receiveIdx,listUid);
+    }
+
+    @Override
+    public void EnterChat1(String sendIdx, String receiveIdx, String listUid) throws Exception {
+        chatMapper.EnterChat1(sendIdx,receiveIdx,listUid);
+    }
+
+
 }

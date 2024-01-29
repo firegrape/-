@@ -3,6 +3,7 @@ package com.bitc.plumMarket
 import com.bitc.plumMarket.Data.ChatList
 import com.bitc.plumMarket.Data.GansimData
 import com.bitc.plumMarket.Data.ListData
+import com.bitc.plumMarket.Data.ListData1
 import com.bitc.plumMarket.Data.ListImageDTO
 import com.bitc.plumMarket.Data.LoginData
 import com.bitc.plumMarket.Data.UserDTO
@@ -57,7 +58,7 @@ interface Api {
 
     @FormUrlEncoded
     @POST("/deleteList")
-    fun DeleteChatList(@Field("idx")idx: String, @Field("reIdx")reidx: String): Call<Void>
+    fun DeleteChatList(@Field("idx")idx: String, @Field("reIdx")reidx: String,@Field("listUid")listUid: String): Call<Void>
 
 
 
@@ -186,7 +187,16 @@ interface Api {
     @POST("/userInfo")
     fun userInfo (@Field("nick") nick:String):Call<UserDTO>
 
-
+    // 수정
+//    여기서의 Modify 는 db연동하는 부분 (인텔리) WriteController 의 주소와 같아야함
+    @FormUrlEncoded
+    @POST("/Modify")
+    fun modifyList(
+        @Field("idx") idx: String,
+        @Field("title") title: String,
+        @Field("money") money: Int,
+        @Field("content") content: String
+    ): Call<Void>
     @FormUrlEncoded
     @POST("/mRating")
     fun MinusRating(@Field("nick") nick:String):Call<Void>
@@ -200,6 +210,22 @@ interface Api {
     @FormUrlEncoded
     @POST("/DetailPageInfo")
     fun DetailSelect(@Field("list_idx")idx: String):Call<List<ListData>>
+
+    @FormUrlEncoded
+    @POST("/chatEnter")
+    fun ChatEnter(@Field("send_idx")sendIdx: String,@Field("receive_idx")receIdx:String,@Field("listUid")listUid:String):Call<Void>
+
+    @FormUrlEncoded
+    @POST("/gansimGet")
+    fun insertGansim(@Field("list_user_id")id:String, @Field("list_idx")idx:String):Call<Int>
+
+    @FormUrlEncoded
+    @POST("UpdateBuy")
+    fun UpdateBuy(@Field("nick")nick:String, @Field("list_idx")idx:String):Call<Void>
+
+    @GET("/getListGumaeList")
+    fun getListGumaeList(
+        @Query("nick")nick:String):Call<List<ListData1>>
 }
 
 

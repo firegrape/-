@@ -91,4 +91,14 @@ public class WriteServiceImpl implements WriteService {
     public ListDTO selectSellState(ListDTO list) throws Exception {
         return  writeMapper.selectSellState(list);
     }
+
+    @Override
+    public void Modify(ListDTO list) throws Exception {
+        writeMapper.Modify(list);
+    }
+
+    @Override
+    public List<ListDTO> getListGumaeList(String userNick) throws Exception {
+        return writeMapper.getListGumaeList(userNick);
+    }
 }

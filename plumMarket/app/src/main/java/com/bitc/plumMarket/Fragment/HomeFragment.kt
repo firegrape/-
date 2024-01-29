@@ -46,7 +46,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupHomeData()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        setupHomeData()
+    }
+
+    fun setupHomeData(){
         RetrofitBuilder.api.getListData().enqueue(object: Callback<List<ListData>> {
             override fun onResponse(call: Call<List<ListData>>, response: Response<List<ListData>>) {
                 if(response.isSuccessful){
@@ -70,10 +78,10 @@ class HomeFragment : Fragment() {
                             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
                             // Fragment의 레이아웃에서 리사이클러뷰를 찾아서 설정
-                            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewList)
-                            recyclerView.layoutManager = linearLayoutManager
-                            recyclerView.adapter = listAdapter
-                            recyclerView.addItemDecoration(
+                            val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewList)
+                            recyclerView?.layoutManager = linearLayoutManager
+                            recyclerView?.adapter = listAdapter
+                            recyclerView?.addItemDecoration(
                                 DividerItemDecoration(
                                     requireContext(),
                                     LinearLayoutManager.VERTICAL
@@ -90,6 +98,5 @@ class HomeFragment : Fragment() {
                 Log.d("error", t.localizedMessage)
             }
         })
-
     }
 }

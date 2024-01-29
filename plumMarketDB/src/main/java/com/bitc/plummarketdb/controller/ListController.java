@@ -50,7 +50,7 @@ public class ListController {
         data.put("delete", user.getUserDeletedYn());
         data.put("favlist", user.getUserFavlist());
         data.put("userRating", user.getUserRating());
-        data.put("user_profile",user.getUserProfile());
+        data.put("userProfile",user.getUserProfile());
         data.put("userComment",user.getUserComment());
         data.put("listCount",user.getListCount());
 
@@ -73,6 +73,15 @@ public class ListController {
 
     }
 
+
+    @PostMapping("/UpdateBuy")
+    @ResponseBody
+    public void UpdateBuy(HttpServletRequest request)throws Exception{
+       String nick = request.getParameter("nick");
+       String idx = request.getParameter("list_idx");
+       listService.UpdateBuy(nick,idx);
+    }
+
     @PostMapping("/DetailPageInfo")
     @ResponseBody
     public String DetailPageInfo(HttpServletRequest request)throws Exception{
@@ -92,6 +101,9 @@ public class ListController {
             data.put("list_loc", item.getListLoc());
             data.put("list_hit_cnt", item.getListHitCnt());
             data.put("list_image_name", item.getListImageName());
+            data.put("user_profile", item.getUserProfile());
+            data.put("user_idx",item.getUserIdx());
+            data.put("list_sell_state",item.getListSellState());
             jsonArray.put(data);
 
         }
@@ -106,6 +118,10 @@ public class ListController {
             data1.put("list_money", noImageDetail.getListMoney());
             data1.put("list_loc", noImageDetail.getListLoc());
             data1.put("list_hit_cnt", noImageDetail.getListHitCnt());
+            data1.put("user_profile", noImageDetail.getUserProfile());
+            data1.put("user_idx",noImageDetail.getUserIdx());
+            data1.put("list_sell_state",noImageDetail.getListSellState());
+            data1.put("list_image_name", "noImage");
             JSONArray jsonArray1 = new JSONArray();
 
             jsonArray1.put(data1);

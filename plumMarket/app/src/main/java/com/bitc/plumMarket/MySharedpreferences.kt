@@ -117,6 +117,17 @@ object MySharedpreferences {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         return prefs.getString("FILEURI", "").toString()
     }
+    fun setProfile(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("PROFILE", input)
+        editor.commit()
+    }
+
+    fun getProfile(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("PROFILE", "").toString()
+    }
 
     fun setFileUrls(context: Context, input: List<Uri>) {
         val gson = Gson()

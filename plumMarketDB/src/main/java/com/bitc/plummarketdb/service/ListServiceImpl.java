@@ -32,4 +32,9 @@ public class ListServiceImpl implements ListService {
     public ListDTO NoImageDetail(String listIdx) throws Exception {
         return listMapper.NoImageDetail(listIdx);
     }
+
+    @Override
+    public void UpdateBuy(String nick, String idx) throws Exception {
+        listMapper.UpdateBuy(nick,idx);
+    }
 }

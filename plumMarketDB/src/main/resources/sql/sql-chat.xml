@@ -6,10 +6,10 @@
 <mapper namespace="com.bitc.plummarketdb.mapper.ChatMapper">
     <select id="selectChatList" parameterType="int" resultType="com.bitc.plummarketdb.DTO.userDTO">
 
-        SELECT user_nick, user_idx, send_idx, receive_idx
+        SELECT user_nick, user_idx, send_idx, receive_idx, list_uid
         FROM user AS u
         JOIN chat AS c ON u.user_idx = c.send_idx OR u.user_idx = c.receive_idx
-        WHERE (c.send_idx = #{userIdx} OR c.receive_idx = #{userIdx}) AND u.user_idx != #{userIdx}
+        WHERE c.send_idx = #{userIdx} AND u.user_idx != #{userIdx}
 
 
     </select>
@@ -17,7 +17,19 @@
 
         delete from
         chat
-        where send_idx = #{sendIdx} and receive_idx = #{receiveIdx} or send_idx = #{receiveIdx} and receive_idx= #{sendIdx}
+        where send_idx = #{sendIdx} and receive_idx = #{receiveIdx} or send_idx = #{receiveIdx} and receive_idx= #{sendIdx} and list_uid = #{listUid}
 
     </delete>
+
+    <insert id="EnterChat" parameterType="String">
+        insert into chat(send_idx,receive_idx,list_uid)values(#{sendIdx},#{receiveIdx}, #{listUid})
+    </insert>
+    <insert id="EnterChat1" parameterType="String">
+        insert into chat(send_idx,receive_idx,list_uid)values(#{receiveIdx},#{sendIdx}, #{listUid})
+    </insert>
+
+    <select id="CheckChat" resultType="int" parameterType="String">
+        select count(*) from chat where send_idx = #{sendIdx} and receive_idx = #{receiveIdx} and list_uid = #{listUid};
+
+    </select>
 </mapper>

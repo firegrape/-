@@ -15,4 +15,14 @@ public class GansimServiceImpl implements GansimService {
     public List<GansimDTO> selectGansimList(String id) throws Exception {
         return gansimMapper.selectGansimList(id);
     }
+
+    @Override
+    public void insertGansim(String id, String listIdx) throws Exception {
+        gansimMapper.insertGansim(id, listIdx);
+    }
+
+    @Override
+    public int gansimChk(String id, String listIdx) throws Exception {
+        return gansimMapper.gansimChk(id,listIdx);
+    }
 }

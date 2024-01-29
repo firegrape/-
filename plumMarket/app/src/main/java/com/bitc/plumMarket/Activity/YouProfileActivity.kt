@@ -15,11 +15,13 @@ import com.bitc.plumMarket.MySharedpreferences
 import com.bitc.plumMarket.R
 import com.bitc.plumMarket.RetrofitBuilder
 import com.bitc.plumMarket.databinding.ActivityYouProfileBinding
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.google.firebase.storage.FirebaseStorage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +36,7 @@ class YouProfileActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)   //툴바 사용 설정
 
-        val nickname = "테스터"
+        val nickname = intent.getStringExtra("nick").toString()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)   //왼쪽 버튼 사용설정(기본은 뒤로가기)
 
@@ -88,6 +90,26 @@ class YouProfileActivity : AppCompatActivity() {
                     rightAxis.isEnabled = false
 
                     barChart.invalidate()
+
+                    val fileName = profile.toString()
+
+                    val storage = FirebaseStorage.getInstance()
+                    val storageReference = storage.getReference("image")
+
+                    if (fileName != null && fileName != "noImage" && fileName != "null" && fileName.isNotBlank()) {
+                        // 조건이 충족되는 경우의 처리 로직
+                        val pathReference = storageReference.child(fileName)
+                        pathReference.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this@YouProfileActivity).load(uri).into(binding.ivUser);
+                        }.addOnFailureListener {
+                            Log.d("image", "가져오기 실패")
+                        }
+
+                    } else {
+
+                        Log.d("image", "데이터 없음")
+                    }
+
 
 
                 }

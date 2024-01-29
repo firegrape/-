@@ -13,4 +13,6 @@ public interface ListMapper {
     List<ListDTO> DetailPageInfo(String listIdx)throws Exception;
 
     ListDTO NoImageDetail(String listIdx)throws Exception;
+
+    void UpdateBuy(@Param("nick") String nick, @Param("idx") String idx)throws Exception;
 }

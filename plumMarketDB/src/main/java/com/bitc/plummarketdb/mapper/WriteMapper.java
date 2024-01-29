@@ -43,4 +43,8 @@ public interface WriteMapper {
     void updateSellRervationDelete(ListDTO list)throws Exception;
 
     ListDTO selectSellState(ListDTO list)throws Exception;
+
+    void Modify(ListDTO list)throws Exception;
+
+    List<ListDTO> getListGumaeList(String userNick)throws Exception;
 }

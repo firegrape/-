@@ -58,15 +58,18 @@ class ChatFragment : Fragment() {
                             var nick = data.user_nick
                             var send_idx = data.send_idx
                             var receive_idx =data.receive_idx
+                            var list_uid = data.listUid
 
                             val index = list.indexOf(data)
 
-                            userList.add(index, ChatList(idx,nick,send_idx,receive_idx))
+                            userList.add(index, ChatList(idx,nick,send_idx,receive_idx,list_uid))
 
                             // 변수에 값을 넣어 사용하거나 처리해주세요
                             // 예시: 로그로 출력
 
                         }
+
+
 
 
                     } else {

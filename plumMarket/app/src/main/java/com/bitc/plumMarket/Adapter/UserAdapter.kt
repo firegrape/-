@@ -53,11 +53,18 @@ class UserAdapter(private val context: Context, private val userList: ArrayList<
         val currentUser = userList[position]
 
         holder.nameText.setOnClickListener {
-            Toast.makeText(context,"tsts",Toast.LENGTH_SHORT).show()
+            val intent  = Intent(context, ChatActivity::class.java)
+
+            //넘길 데이터
+            intent.putExtra("nick", currentUser.user_nick)
+            intent.putExtra("uId", currentUser.user_idx)
+            intent.putExtra("listUid", currentUser.listUid)
+
+            context.startActivity(intent)
         }
         //화면에 데이터 보여주기
         holder.nameText.text = currentUser.user_nick
-
+        holder.listIdx.text = currentUser.listUid
 
         //아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
@@ -68,6 +75,7 @@ class UserAdapter(private val context: Context, private val userList: ArrayList<
             //넘길 데이터
             intent.putExtra("nick", currentUser.user_nick)
             intent.putExtra("uId", currentUser.user_idx)
+            intent.putExtra("listUid", currentUser.listUid)
 
             context.startActivity(intent)
         }
@@ -81,7 +89,7 @@ class UserAdapter(private val context: Context, private val userList: ArrayList<
                 receiverRoom = MySharedpreferences.getUserIdx(context) + currentUser.user_idx
                 senderRoom =  currentUser.user_idx +MySharedpreferences.getUserIdx(context)
 
-                RetrofitBuilder.api.DeleteChatList(MySharedpreferences.getUserIdx(context),currentUser.user_idx).enqueue(object:
+                RetrofitBuilder.api.DeleteChatList(MySharedpreferences.getUserIdx(context),currentUser.user_idx, currentUser.listUid).enqueue(object:
                     Callback<Void> {
                     override fun onResponse(call: retrofit2.Call<Void>, response: Response<Void>) {
                         if (response.isSuccessful) {
@@ -140,5 +148,6 @@ class UserAdapter(private val context: Context, private val userList: ArrayList<
     class UserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         val nameText: TextView = itemView.findViewById(R.id.name_text)
+        val listIdx: TextView = itemView.findViewById(R.id.list_id)
     }
 }

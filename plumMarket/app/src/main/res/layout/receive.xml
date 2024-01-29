@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_margin="5dp"
-        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        android:background="#ced4da"
         android:padding="10dp"
         android:text="받는 메시지"
         android:textSize="18sp" />

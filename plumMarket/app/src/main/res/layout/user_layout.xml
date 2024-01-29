@@ -19,4 +19,15 @@
         android:layout_below="@id/name_text"
         android:layout_marginTop="5dp"
         android:background="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/list_id"
+       android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:textSize="16sp" />
+
 </RelativeLayout>

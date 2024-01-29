@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface GansimService {
     List<GansimDTO> selectGansimList(String id) throws Exception;
+
+    void insertGansim(String id, String listIdx)throws Exception;
+
+    int gansimChk(String id, String listIdx)throws Exception;
 }

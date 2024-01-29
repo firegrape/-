@@ -38,8 +38,9 @@ public class WriteController {
         ListDTO list = new ListDTO();
         list.setListTitle(title);
         list.setListContent(content);
+        list.setListUserNick(nick);
         list.setListMoney(money1);
-        list.setListUserNick("테스터");
+
         list.setListLoc(loc);
 //
         writeService.InsertList(list);
@@ -93,14 +94,38 @@ public class WriteController {
         return jsonArray.toString();
     }
 
+    @RequestMapping(value = "/Modify", method = {RequestMethod.POST})
+    @ResponseBody
+// 수정되는거면 반환값이 없어서 void 를 적고 반환값이 있으면 return을 씀.
+// 받아온 값인 title, content,money,idx 모두를 listDTO(com.bitc.plummarketdb.dto.listdto)타입의 'list'에 넣는다.
+    public void Modify(HttpServletRequest request, ListDTO list)throws Exception{
+
+        list.setListIdx(Integer.parseInt(request.getParameter("idx")));
+        list.setListTitle(request.getParameter("title"));
+        list.setListContent(request.getParameter("content"));
+        list.setListMoney(Integer.parseInt(request.getParameter("money")));
+
+
+
+        writeService.Modify(list);
+
+    }
+
     @RequestMapping(value = "/insertImage", method = {RequestMethod.POST})
     @ResponseBody
     public void SelectListImage(@RequestBody List<ListImageDTO> list)throws Exception{
-
-
         System.out.println(list);
-        for(ListImageDTO item: list){
+
+        if (list.size() >= 3) {
+            ListImageDTO item = list.get(2); // 3번째 요소를 가져옴
             writeService.InsertImageList(item);
+        }else if(list.size() >= 2){
+            ListImageDTO item = list.get(1); // 3번째 요소를 가져옴
+            writeService.InsertImageList(item);
+        }else{
+            ListImageDTO item = list.get(0); // 3번째 요소를 가져옴
+            writeService.InsertImageList(item);
+
         }
     }
     @RequestMapping(value = "/SearchListTitle", method = {RequestMethod.POST})
@@ -327,6 +352,30 @@ public class WriteController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/getListGumaeList", method = {RequestMethod.GET})
+    @ResponseBody
+    public String getListGumaeData(HttpServletRequest request)throws Exception{
+        String userNick = request.getParameter("nick");
+
+        List<ListDTO> list1 = writeService.getListGumaeList(userNick);
+
+        JSONArray jsonArray = new JSONArray();
+        for(ListDTO list : list1){
+            JSONObject data = new JSONObject();
+            data.put("list_idx", list.getListIdx());
+            data.put("list_title", list.getListTitle());
+            data.put("list_content", list.getListContent());
+            data.put("list_user_nick", list.getListUserNick());
+            data.put("list_money", list.getListMoney());
+            data.put("list_sell_state", list.getListSellState());
+            data.put("list_image_name", list.getListImageName());
+
+            jsonArray.put(data);
+        }
+
+        return jsonArray.toString();
     }
 }
 

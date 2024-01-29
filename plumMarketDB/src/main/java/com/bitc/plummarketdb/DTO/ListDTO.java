@@ -16,4 +16,7 @@ public class ListDTO {
     private String listUpdateDate;
     private String listImageName;
     private String listSellState;
+
+    private String userProfile;
+    private String userIdx;
 }
